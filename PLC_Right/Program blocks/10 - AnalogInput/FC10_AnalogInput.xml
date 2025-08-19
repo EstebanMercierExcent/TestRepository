@@ -1,0 +1,394 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Document>
+  <Engineering version="V19" />
+  <SW.Blocks.FC ID="0">
+    <AttributeList>
+      <AutoNumber>false</AutoNumber>
+      <Interface><Sections xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v5">
+  <Section Name="Input" />
+  <Section Name="Output" />
+  <Section Name="InOut" />
+  <Section Name="Temp" />
+  <Section Name="Constant" />
+  <Section Name="Return">
+    <Member Name="Ret_Val" Datatype="Void" />
+  </Section>
+</Sections></Interface>
+      <IsIECCheckEnabled>true</IsIECCheckEnabled>
+      <MemoryLayout>Optimized</MemoryLayout>
+      <Name>FC10_AnalogInput</Name>
+      <Namespace />
+      <Number>10</Number>
+      <ProgrammingLanguage>LAD</ProgrammingLanguage>
+      <SetENOAutomatically>false</SetENOAutomatically>
+    </AttributeList>
+    <ObjectList>
+      <MultilingualText ID="1" CompositionName="Comment">
+        <ObjectList>
+          <MultilingualTextItem ID="2" CompositionName="Items">
+            <AttributeList>
+              <Culture>fr-FR</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+          <MultilingualTextItem ID="3" CompositionName="Items">
+            <AttributeList>
+              <Culture>en-US</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+          <MultilingualTextItem ID="4" CompositionName="Items">
+            <AttributeList>
+              <Culture>es-ES</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+        </ObjectList>
+      </MultilingualText>
+      <SW.Blocks.CompileUnit ID="5" CompositionName="CompileUnits">
+        <AttributeList>
+          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v5">
+  <Parts>
+    <Access Scope="GlobalVariable" UId="21">
+      <Symbol>
+        <Component Name="AlwaysTRUE" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="22">
+      <Symbol>
+        <Component Name="IW_DistanceSensor_42B4" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="23">
+      <Symbol>
+        <Component Name="DB_Parameters" />
+        <Component Name="SensorParameter42B4" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="24">
+      <Symbol>
+        <Component Name="DB_AnalogInput" />
+        <Component Name="ConvertResult" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="25">
+      <Symbol>
+        <Component Name="DB_Exchange" />
+        <Component Name="rAnalogSensorValue" />
+      </Symbol>
+    </Access>
+    <Call UId="26">
+      <CallInfo Name="FB_ScaleValueIntReal" BlockType="FB">
+        <Instance Scope="GlobalVariable" UId="27">
+          <Component Name="iDB_ScaleValueCarBodyDetection" />
+        </Instance>
+        <Parameter Name="xExecute" Section="Input" Type="Bool" />
+        <Parameter Name="nInputValue" Section="Input" Type="Int" />
+        <Parameter Name="stConfig" Section="Input" Type="&quot;stConfigScaleIntReal&quot;" />
+        <Parameter Name="stResult" Section="Output" Type="&quot;stResult&quot;" />
+        <Parameter Name="rOutputValue" Section="Output" Type="Real" />
+      </CallInfo>
+    </Call>
+  </Parts>
+  <Wires>
+    <Wire UId="28">
+      <Powerrail />
+      <NameCon UId="26" Name="en" />
+    </Wire>
+    <Wire UId="29">
+      <IdentCon UId="21" />
+      <NameCon UId="26" Name="xExecute" />
+    </Wire>
+    <Wire UId="30">
+      <IdentCon UId="22" />
+      <NameCon UId="26" Name="nInputValue" />
+    </Wire>
+    <Wire UId="31">
+      <IdentCon UId="23" />
+      <NameCon UId="26" Name="stConfig" />
+    </Wire>
+    <Wire UId="32">
+      <NameCon UId="26" Name="stResult" />
+      <IdentCon UId="24" />
+    </Wire>
+    <Wire UId="33">
+      <NameCon UId="26" Name="rOutputValue" />
+      <IdentCon UId="25" />
+    </Wire>
+  </Wires>
+</FlgNet></NetworkSource>
+          <ProgrammingLanguage>LAD</ProgrammingLanguage>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="6" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="7" CompositionName="Items">
+                <AttributeList>
+                  <Culture>fr-FR</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="8" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="9" CompositionName="Items">
+                <AttributeList>
+                  <Culture>es-ES</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+          <MultilingualText ID="A" CompositionName="Title">
+            <ObjectList>
+              <MultilingualTextItem ID="B" CompositionName="Items">
+                <AttributeList>
+                  <Culture>fr-FR</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="C" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Convert input analog value in distance value</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="D" CompositionName="Items">
+                <AttributeList>
+                  <Culture>es-ES</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Blocks.CompileUnit>
+      <SW.Blocks.CompileUnit ID="E" CompositionName="CompileUnits">
+        <AttributeList>
+          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v5">
+  <Parts>
+    <Access Scope="GlobalVariable" UId="21">
+      <Symbol>
+        <Component Name="DB_AnalogInput" />
+        <Component Name="ConvertResult" />
+        <Component Name="xBusy" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="22">
+      <Symbol>
+        <Component Name="DB_AnalogInput" />
+        <Component Name="ConvertResult" />
+        <Component Name="xValid" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="23">
+      <Symbol>
+        <Component Name="DB_AnalogInput" />
+        <Component Name="ConvertResult" />
+        <Component Name="xError" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="24">
+      <Symbol>
+        <Component Name="DB_Exchange" />
+        <Component Name="rAnalogSensorValue" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="25">
+      <Symbol>
+        <Component Name="DB_Parameters" />
+        <Component Name="SwitchSensorValue" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="26">
+      <Symbol>
+        <Component Name="DB_Exchange" />
+        <Component Name="xAnalogSensorDetection" />
+      </Symbol>
+    </Access>
+    <Part Name="Contact" UId="27" />
+    <Part Name="Contact" UId="28" />
+    <Part Name="Contact" UId="29">
+      <Negated Name="operand" />
+    </Part>
+    <Part Name="Le" UId="30">
+      <TemplateValue Name="SrcType" Type="Type">Real</TemplateValue>
+    </Part>
+    <Part Name="Coil" UId="31" />
+  </Parts>
+  <Wires>
+    <Wire UId="32">
+      <Powerrail />
+      <NameCon UId="27" Name="in" />
+    </Wire>
+    <Wire UId="33">
+      <IdentCon UId="21" />
+      <NameCon UId="27" Name="operand" />
+    </Wire>
+    <Wire UId="34">
+      <NameCon UId="27" Name="out" />
+      <NameCon UId="28" Name="in" />
+    </Wire>
+    <Wire UId="35">
+      <IdentCon UId="22" />
+      <NameCon UId="28" Name="operand" />
+    </Wire>
+    <Wire UId="36">
+      <NameCon UId="28" Name="out" />
+      <NameCon UId="29" Name="in" />
+    </Wire>
+    <Wire UId="37">
+      <IdentCon UId="23" />
+      <NameCon UId="29" Name="operand" />
+    </Wire>
+    <Wire UId="38">
+      <NameCon UId="29" Name="out" />
+      <NameCon UId="30" Name="pre" />
+    </Wire>
+    <Wire UId="39">
+      <IdentCon UId="24" />
+      <NameCon UId="30" Name="in1" />
+    </Wire>
+    <Wire UId="40">
+      <IdentCon UId="25" />
+      <NameCon UId="30" Name="in2" />
+    </Wire>
+    <Wire UId="41">
+      <NameCon UId="30" Name="out" />
+      <NameCon UId="31" Name="in" />
+    </Wire>
+    <Wire UId="42">
+      <IdentCon UId="26" />
+      <NameCon UId="31" Name="operand" />
+    </Wire>
+  </Wires>
+</FlgNet></NetworkSource>
+          <ProgrammingLanguage>LAD</ProgrammingLanguage>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="F" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="10" CompositionName="Items">
+                <AttributeList>
+                  <Culture>fr-FR</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="11" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="12" CompositionName="Items">
+                <AttributeList>
+                  <Culture>es-ES</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+          <MultilingualText ID="13" CompositionName="Title">
+            <ObjectList>
+              <MultilingualTextItem ID="14" CompositionName="Items">
+                <AttributeList>
+                  <Culture>fr-FR</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="15" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Compare if the distance value is in the range detection value</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="16" CompositionName="Items">
+                <AttributeList>
+                  <Culture>es-ES</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Blocks.CompileUnit>
+      <SW.Blocks.CompileUnit ID="17" CompositionName="CompileUnits">
+        <AttributeList>
+          <NetworkSource />
+          <ProgrammingLanguage>LAD</ProgrammingLanguage>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="18" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="19" CompositionName="Items">
+                <AttributeList>
+                  <Culture>fr-FR</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="1A" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="1B" CompositionName="Items">
+                <AttributeList>
+                  <Culture>es-ES</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+          <MultilingualText ID="1C" CompositionName="Title">
+            <ObjectList>
+              <MultilingualTextItem ID="1D" CompositionName="Items">
+                <AttributeList>
+                  <Culture>fr-FR</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="1E" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="1F" CompositionName="Items">
+                <AttributeList>
+                  <Culture>es-ES</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Blocks.CompileUnit>
+      <MultilingualText ID="20" CompositionName="Title">
+        <ObjectList>
+          <MultilingualTextItem ID="21" CompositionName="Items">
+            <AttributeList>
+              <Culture>fr-FR</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+          <MultilingualTextItem ID="22" CompositionName="Items">
+            <AttributeList>
+              <Culture>en-US</Culture>
+              <Text>Analog Input</Text>
+            </AttributeList>
+          </MultilingualTextItem>
+          <MultilingualTextItem ID="23" CompositionName="Items">
+            <AttributeList>
+              <Culture>es-ES</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+        </ObjectList>
+      </MultilingualText>
+    </ObjectList>
+  </SW.Blocks.FC>
+</Document>

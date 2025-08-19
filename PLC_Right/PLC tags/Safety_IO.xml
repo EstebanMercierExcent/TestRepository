@@ -1,0 +1,747 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Document>
+  <Engineering version="V19" />
+  <SW.Tags.PlcTagTable ID="0">
+    <AttributeList>
+      <Name>Safety_IO</Name>
+    </AttributeList>
+    <ObjectList>
+      <SW.Tags.PlcTag ID="1" CompositionName="Tags">
+        <AttributeList>
+          <DataTypeName>Bool</DataTypeName>
+          <ExternalAccessible>false</ExternalAccessible>
+          <LogicalAddress>%I500.0</LogicalAddress>
+          <Name>IS_ZAxisBrakeFeedback</Name>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="2" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="3" CompositionName="Items">
+                <AttributeList>
+                  <Culture>fr-FR</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="4" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Robot Z axis brake status feedback channel 1</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="5" CompositionName="Items">
+                <AttributeList>
+                  <Culture>es-ES</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcTag>
+      <SW.Tags.PlcTag ID="6" CompositionName="Tags">
+        <AttributeList>
+          <DataTypeName>Bool</DataTypeName>
+          <ExternalAccessible>false</ExternalAccessible>
+          <LogicalAddress>%I500.4</LogicalAddress>
+          <Name>IS_ZAxisBrakeFeedback_Ch2</Name>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="7" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="8" CompositionName="Items">
+                <AttributeList>
+                  <Culture>fr-FR</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="9" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Robot Z axis brake status feedback channel 2</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="A" CompositionName="Items">
+                <AttributeList>
+                  <Culture>es-ES</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcTag>
+      <SW.Tags.PlcTag ID="B" CompositionName="Tags">
+        <AttributeList>
+          <DataTypeName>Bool</DataTypeName>
+          <ExternalAccessible>false</ExternalAccessible>
+          <LogicalAddress>%Q508.0</LogicalAddress>
+          <Name>OS_OpenZAxisBrake</Name>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="C" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="D" CompositionName="Items">
+                <AttributeList>
+                  <Culture>fr-FR</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="E" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Open Z axis brake</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="F" CompositionName="Items">
+                <AttributeList>
+                  <Culture>es-ES</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcTag>
+      <SW.Tags.PlcTag ID="10" CompositionName="Tags">
+        <AttributeList>
+          <DataTypeName>Bool</DataTypeName>
+          <ExternalAccessible>false</ExternalAccessible>
+          <LogicalAddress>%I508.0</LogicalAddress>
+          <Name>ISS_OpenZAxisBrake</Name>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="11" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="12" CompositionName="Items">
+                <AttributeList>
+                  <Culture>fr-FR</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="13" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>State Open Z axis brake</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="14" CompositionName="Items">
+                <AttributeList>
+                  <Culture>es-ES</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcTag>
+      <SW.Tags.PlcTag ID="15" CompositionName="Tags">
+        <AttributeList>
+          <DataTypeName>Bool</DataTypeName>
+          <ExternalAccessible>false</ExternalAccessible>
+          <LogicalAddress>%I501.0</LogicalAddress>
+          <Name>ISS_ZAxisBrakeFeedback</Name>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="16" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="17" CompositionName="Items">
+                <AttributeList>
+                  <Culture>fr-FR</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="18" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>State Robot Z axis brake status feedback channel 1</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="19" CompositionName="Items">
+                <AttributeList>
+                  <Culture>es-ES</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcTag>
+      <SW.Tags.PlcTag ID="1A" CompositionName="Tags">
+        <AttributeList>
+          <DataTypeName>Bool</DataTypeName>
+          <ExternalAccessible>false</ExternalAccessible>
+          <LogicalAddress>%I501.4</LogicalAddress>
+          <Name>ISS_ZAxisBrakeFeedback_Ch2</Name>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="1B" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="1C" CompositionName="Items">
+                <AttributeList>
+                  <Culture>fr-FR</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="1D" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>State Robot Z axis brake status feedback channel 2</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="1E" CompositionName="Items">
+                <AttributeList>
+                  <Culture>es-ES</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcTag>
+      <SW.Tags.PlcTag ID="1F" CompositionName="Tags">
+        <AttributeList>
+          <DataTypeName>Bool</DataTypeName>
+          <ExternalAccessible>false</ExternalAccessible>
+          <LogicalAddress>%I514.0</LogicalAddress>
+          <Name>IS_AutomaticMode</Name>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="20" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="21" CompositionName="Items">
+                <AttributeList>
+                  <Culture>fr-FR</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="22" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>True if Automatic mode is selected.</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="23" CompositionName="Items">
+                <AttributeList>
+                  <Culture>es-ES</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcTag>
+      <SW.Tags.PlcTag ID="24" CompositionName="Tags">
+        <AttributeList>
+          <DataTypeName>Bool</DataTypeName>
+          <ExternalAccessible>false</ExternalAccessible>
+          <LogicalAddress>%I514.1</LogicalAddress>
+          <Name>IS_DriveEnableFeedback</Name>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="25" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="26" CompositionName="Items">
+                <AttributeList>
+                  <Culture>fr-FR</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="27" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>True if the power to the motors is enabled.</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="28" CompositionName="Items">
+                <AttributeList>
+                  <Culture>es-ES</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcTag>
+      <SW.Tags.PlcTag ID="29" CompositionName="Tags">
+        <AttributeList>
+          <DataTypeName>Bool</DataTypeName>
+          <ExternalAccessible>false</ExternalAccessible>
+          <LogicalAddress>%I514.2</LogicalAddress>
+          <Name>IS_EnableSwitch</Name>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="2A" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="2B" CompositionName="Items">
+                <AttributeList>
+                  <Culture>fr-FR</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="2C" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>True when the enable switch is activated</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="2D" CompositionName="Items">
+                <AttributeList>
+                  <Culture>es-ES</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcTag>
+      <SW.Tags.PlcTag ID="2E" CompositionName="Tags">
+        <AttributeList>
+          <DataTypeName>Bool</DataTypeName>
+          <ExternalAccessible>false</ExternalAccessible>
+          <LogicalAddress>%I514.3</LogicalAddress>
+          <Name>IS_LocalEStopStatus</Name>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="2F" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="30" CompositionName="Items">
+                <AttributeList>
+                  <Culture>fr-FR</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="31" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>False if the emergency stop on the FlexPendant is pressed.</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="32" CompositionName="Items">
+                <AttributeList>
+                  <Culture>es-ES</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcTag>
+      <SW.Tags.PlcTag ID="33" CompositionName="Tags">
+        <AttributeList>
+          <DataTypeName>Bool</DataTypeName>
+          <ExternalAccessible>false</ExternalAccessible>
+          <LogicalAddress>%I514.4</LogicalAddress>
+          <Name>IS_ManualFullSpeedMode</Name>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="34" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="35" CompositionName="Items">
+                <AttributeList>
+                  <Culture>fr-FR</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="36" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>True if manual full speed mode is selected.</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="37" CompositionName="Items">
+                <AttributeList>
+                  <Culture>es-ES</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcTag>
+      <SW.Tags.PlcTag ID="38" CompositionName="Tags">
+        <AttributeList>
+          <DataTypeName>Bool</DataTypeName>
+          <ExternalAccessible>false</ExternalAccessible>
+          <LogicalAddress>%I514.5</LogicalAddress>
+          <Name>IS_ManualMode</Name>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="39" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="3A" CompositionName="Items">
+                <AttributeList>
+                  <Culture>fr-FR</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="3B" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>True if manual mode is selected.</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="3C" CompositionName="Items">
+                <AttributeList>
+                  <Culture>es-ES</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcTag>
+      <SW.Tags.PlcTag ID="3D" CompositionName="Tags">
+        <AttributeList>
+          <DataTypeName>Bool</DataTypeName>
+          <ExternalAccessible>false</ExternalAccessible>
+          <LogicalAddress>%Q526.1</LogicalAddress>
+          <Name>OS_SafetyEnable</Name>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="3E" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="3F" CompositionName="Items">
+                <AttributeList>
+                  <Culture>fr-FR</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="40" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>True as soon as communication is up</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="41" CompositionName="Items">
+                <AttributeList>
+                  <Culture>es-ES</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcTag>
+      <SW.Tags.PlcTag ID="42" CompositionName="Tags">
+        <AttributeList>
+          <DataTypeName>Bool</DataTypeName>
+          <ExternalAccessible>false</ExternalAccessible>
+          <LogicalAddress>%I514.6</LogicalAddress>
+          <Name>IS_Stop0Status</Name>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="43" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="44" CompositionName="Items">
+                <AttributeList>
+                  <Culture>fr-FR</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="45" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>False if a stop category 0 is active.</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="46" CompositionName="Items">
+                <AttributeList>
+                  <Culture>es-ES</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcTag>
+      <SW.Tags.PlcTag ID="47" CompositionName="Tags">
+        <AttributeList>
+          <DataTypeName>Bool</DataTypeName>
+          <ExternalAccessible>false</ExternalAccessible>
+          <LogicalAddress>%I514.7</LogicalAddress>
+          <Name>IS_Stop1Status</Name>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="48" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="49" CompositionName="Items">
+                <AttributeList>
+                  <Culture>fr-FR</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="4A" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>False if a stop category 1 is active.</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="4B" CompositionName="Items">
+                <AttributeList>
+                  <Culture>es-ES</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcTag>
+      <SW.Tags.PlcTag ID="4C" CompositionName="Tags">
+        <AttributeList>
+          <DataTypeName>Bool</DataTypeName>
+          <ExternalAccessible>false</ExternalAccessible>
+          <LogicalAddress>%Q527.0</LogicalAddress>
+          <Name>OS_ExternalEStop</Name>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="4D" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="4E" CompositionName="Items">
+                <AttributeList>
+                  <Culture>fr-FR</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="4F" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Write external emergency stop to robot safemove</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="50" CompositionName="Items">
+                <AttributeList>
+                  <Culture>es-ES</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcTag>
+      <SW.Tags.PlcTag ID="51" CompositionName="Tags">
+        <AttributeList>
+          <DataTypeName>Bool</DataTypeName>
+          <ExternalAccessible>false</ExternalAccessible>
+          <LogicalAddress>%Q527.1</LogicalAddress>
+          <Name>OS_ExternalOProtect</Name>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="52" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="53" CompositionName="Items">
+                <AttributeList>
+                  <Culture>fr-FR</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="54" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Write external operator protection to robot safemove</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="55" CompositionName="Items">
+                <AttributeList>
+                  <Culture>es-ES</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcTag>
+      <SW.Tags.PlcTag ID="56" CompositionName="Tags">
+        <AttributeList>
+          <DataTypeName>Bool</DataTypeName>
+          <ExternalAccessible>false</ExternalAccessible>
+          <LogicalAddress>%I515.0</LogicalAddress>
+          <Name>IS_FdbExternalEstop</Name>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="57" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="58" CompositionName="Items">
+                <AttributeList>
+                  <Culture>fr-FR</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="59" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Feedback from robot safemove for external emergency stop</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="5A" CompositionName="Items">
+                <AttributeList>
+                  <Culture>es-ES</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcTag>
+      <SW.Tags.PlcTag ID="5B" CompositionName="Tags">
+        <AttributeList>
+          <DataTypeName>Bool</DataTypeName>
+          <ExternalAccessible>false</ExternalAccessible>
+          <LogicalAddress>%I515.1</LogicalAddress>
+          <Name>IS_FdbExternalOProtect</Name>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="5C" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="5D" CompositionName="Items">
+                <AttributeList>
+                  <Culture>fr-FR</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="5E" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Feedback from robot safemove for external operator protection</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="5F" CompositionName="Items">
+                <AttributeList>
+                  <Culture>es-ES</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcTag>
+      <SW.Tags.PlcTag ID="60" CompositionName="Tags">
+        <AttributeList>
+          <DataTypeName>Byte</DataTypeName>
+          <ExternalAccessible>false</ExternalAccessible>
+          <LogicalAddress>%IB500</LogicalAddress>
+          <Name>ISB_Safety500</Name>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="61" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="62" CompositionName="Items">
+                <AttributeList>
+                  <Culture>fr-FR</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="63" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="64" CompositionName="Items">
+                <AttributeList>
+                  <Culture>es-ES</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcTag>
+      <SW.Tags.PlcTag ID="65" CompositionName="Tags">
+        <AttributeList>
+          <DataTypeName>Byte</DataTypeName>
+          <ExternalAccessible>false</ExternalAccessible>
+          <LogicalAddress>%QB508</LogicalAddress>
+          <Name>OSB_Safety508</Name>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="66" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="67" CompositionName="Items">
+                <AttributeList>
+                  <Culture>fr-FR</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="68" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="69" CompositionName="Items">
+                <AttributeList>
+                  <Culture>es-ES</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcTag>
+      <SW.Tags.PlcTag ID="6A" CompositionName="Tags">
+        <AttributeList>
+          <DataTypeName>Bool</DataTypeName>
+          <ExternalAccessible>false</ExternalAccessible>
+          <LogicalAddress>%Q508.1</LogicalAddress>
+          <Name>OS_PowerOffFerRo</Name>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="6B" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="6C" CompositionName="Items">
+                <AttributeList>
+                  <Culture>fr-FR</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="6D" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Power Off 24v safety of FerRobotic</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="6E" CompositionName="Items">
+                <AttributeList>
+                  <Culture>es-ES</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcTag>
+      <SW.Tags.PlcTag ID="6F" CompositionName="Tags">
+        <AttributeList>
+          <DataTypeName>Bool</DataTypeName>
+          <ExternalAccessible>false</ExternalAccessible>
+          <LogicalAddress>%I508.1</LogicalAddress>
+          <Name>ISS_PowerOffFerRo</Name>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="70" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="71" CompositionName="Items">
+                <AttributeList>
+                  <Culture>fr-FR</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="72" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>State Power Off 24v safety of FerRobotic</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="73" CompositionName="Items">
+                <AttributeList>
+                  <Culture>es-ES</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcTag>
+    </ObjectList>
+  </SW.Tags.PlcTagTable>
+</Document>
