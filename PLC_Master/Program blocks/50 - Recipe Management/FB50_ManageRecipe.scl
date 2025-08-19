@@ -1,0 +1,466 @@
+﻿FUNCTION_BLOCK "FB50_ManageRecipe"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      xSandingInProgress { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Sanding process is in progress
+      RecipeEmpty { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : "stRecipe";   // Recipe empty for delete the curent recipe data
+   END_VAR
+
+   VAR_OUTPUT 
+      xDisplayPrevButton { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Display previous button in recipe screen
+      xDisplayNextButton { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Display next button in recipe screen
+      xDiseableNewButton { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Diseable new recipe button
+      xDiseableSaveButton { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Diseable save recipe button
+      xDiseableDeleteButton { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Diseable delete recipe button
+      xLockRecipe { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Lock Modification recipe
+      xLockSelectJobDataNumber { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Lock selection of job data number
+      xLockJobDataLeft { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Lock modification Job Data left robot
+      xLockJobDataRight { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Lock modification Job Data right robot
+      xNoMoreRecipeAvailable { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // No free recipe are available
+      wStatus { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Word;   // Status word for debug
+      aRecipeList { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Array[1..10] of "stRecipeListHMI";   // List of the recipe name display on HMI
+   END_VAR
+
+   VAR_IN_OUT 
+      xListRecipe { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Make the list of all available recipe in the data base
+      xLoadRecipe { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Load the recipe from the data base
+      xNewRecipe { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Search for the next recipe free
+      xSaveRecipe { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Save the current recipe in the data base
+      xDeleteRecipe { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Delecte current recipe from data base
+      xUnloadRecipe { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Unload current recipe
+      xNextRecipe { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Load next Recipe in the Recipes list
+      xPrevRecipe { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Load previous Recipe in the Recipes list
+      usiNumRecipe { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : USInt;   // Number of the current recipe
+      usiProcessPhase { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : USInt;
+      usiJobNumberLeft { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : USInt;   // Job number required by left robot
+      usiJobNumberRight { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : USInt;   // Job number required by right robot
+      CurrentRecipe : "stRecipe";   // Current recipe
+      WorkRecipe : "stWorkRecipe";
+      aRecipesDB : Array[0..256] of "stRecipe";   // Data base of the recipe
+   END_VAR
+
+   VAR 
+      sxRecipeLoaded { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      sxRecipeSaved { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      sxReadDblBusy { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      sxListDblBusy { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      sxWriteDblBusy { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      sxListRecipe { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      sxOperationInProgress { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Operation in progress
+      sxUpdateDisplayList { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      sxRecipeSelectFound { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      snReadDblResult { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Int;
+      snWriteDblResult { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Int;
+      snListDblResult { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Int;
+      suiStepLoadRecipe { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      suiStepSaveRecipe { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      suiStepListRecipe { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      suicount { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      suiCurrentIndexRecipe { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      suiNextRecipeFree { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      suiTotalOfRecipe { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      suiIndexDisplay { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      suiMemIndexDisplay { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      suiCount_1 { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      susiCurrentIndexList { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : USInt;
+      susiMemProcessPhase { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : USInt;
+      TempRecipe { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; S7_SetPoint := 'False'} : "stRecipe";
+      aListRecipe { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; S7_SetPoint := 'False'} : Array[1..255] of "stItemListRecipe";   // List of recipe available in the data base
+      miDB_FPLockSelectRecipe {InstructionName := 'R_TRIG'; LibVersion := '1.0'; ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; S7_SetPoint := 'False'} : R_TRIG;
+      miDB_FNLockSelectRecipe {InstructionName := 'F_TRIG'; LibVersion := '1.0'; ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; S7_SetPoint := 'False'} : F_TRIG;
+      suiCountLock : UInt;
+      suiLastRecipe { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      susiMaxLoad { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : USInt;
+   END_VAR
+
+   VAR_TEMP 
+      txReqReadRecipe : Bool;
+      txReqWriteRecipe : Bool;
+      txReqListRecipe : Bool;
+   END_VAR
+
+   VAR CONSTANT 
+      stepCtrlRecipeNumber : UInt := 0;
+      stepStartLoadRecipe : UInt := 10;
+      stepLoadRecipe : UInt := 20;
+      stepLoadRecipeCompleted : UInt := 30;
+      stepLoadCompleted : UInt := 40;
+      stepStartSaveRecipe : UInt := 10;
+      stepSaveRecipe : UInt := 20;
+      stepSaveRecipeCompleted : UInt := 30;
+      stepSaveCompleted : UInt := 40;
+      stepInitList : UInt := 0;
+      stepCtrlListRecipeNumber : UInt := 10;
+      stepStartListLoadRecipe : UInt := 20;
+      stepListLoadRecipe : UInt := 30;
+      StepListWaitOneCycle : UInt := 35;
+      stepListLoadCompleted : UInt := 40;
+   END_VAR
+
+
+BEGIN
+	// Force to make the list of recipe before load the recipe
+	IF (NOT #sxRecipeLoaded) AND (#suiNextRecipeFree = 0) AND (NOT #sxListRecipe) THEN // Load the list of recipe before load the recipe
+	  
+	  REGION Force List recipe before load recipe
+	    #sxListRecipe := TRUE;
+	    #suiStepListRecipe := #stepInitList;
+	  END_REGION
+	  
+	  // Load recipe from DB_Recipes in the load mmemory of the PLC to the DB_CurrentRecipe
+	ELSIF (NOT #sxRecipeLoaded) AND (#suiNextRecipeFree <> 0) AND (NOT #sxListRecipe) THEN
+	  
+	  REGION Load recipe
+	    #sxOperationInProgress := TRUE;
+	    #sxRecipeSaved := TRUE;
+	    CASE #suiStepLoadRecipe OF
+	      #stepCtrlRecipeNumber: // Control if the Recipe Number is in range of 1 to 255
+	        IF (#usiNumRecipe = 0) AND (#suiTotalOfRecipe = 0) THEN // No recipe loaded before and no recipe in the data base
+	          #usiNumRecipe := 1;
+	        ELSIF (#usiNumRecipe = 0) AND (#suiTotalOfRecipe <> 0) THEN // No recipe loaded before and less then one recipe listed in the data base
+	          #usiNumRecipe := UINT_TO_USINT(#aListRecipe[1].RecipeIndex);
+	        ELSIF #usiNumRecipe > 255 THEN
+	          #usiNumRecipe := 255;
+	        END_IF;
+	        #suiStepLoadRecipe := #stepStartLoadRecipe;
+	        
+	      #stepStartLoadRecipe: // Start to read the source DB to put the recipe in the destination DB
+	        IF (#snReadDblResult = 16#7002) THEN // Reading is in progress
+	          #suiStepLoadRecipe := #stepLoadRecipe;
+	        ELSIF (#snReadDblResult > 16#8000) THEN // Reading Error
+	          #wStatus := INT_TO_WORD(#snReadDblResult);
+	        END_IF;
+	        
+	      #stepLoadRecipe: // Waiting for reading completed
+	        IF (NOT #sxReadDblBusy) THEN
+	          #WorkRecipe.RecipeName := #CurrentRecipe.RecipeName;
+	          #WorkRecipe.RecipeCbsType := #CurrentRecipe.RecipeCbsType;
+	          #WorkRecipe.RecipeRawMaterial := #CurrentRecipe.RecipeRawMaterial;
+	          #WorkRecipe.RecipeTrajNumber := #CurrentRecipe.RecipeTrajNumber;
+	          #WorkRecipe.RecipeLayerType.JobTableLeft[0] := #RecipeEmpty.RecipeLayerType[1].JobTableLeft[0];
+	          #WorkRecipe.RecipeLayerType.JobTableRight[0] := #RecipeEmpty.RecipeLayerType[1].JobTableRight[0];
+	          #usiJobNumberLeft := 0;
+	          #usiJobNumberRight := 0;
+	          #usiProcessPhase := 0;
+	          #sxUpdateDisplayList := TRUE;
+	          #sxRecipeLoaded := TRUE;
+	          #suiStepLoadRecipe := #stepLoadCompleted;
+	        END_IF;
+	        
+	      #stepLoadCompleted:
+	        ;// Do nothing
+	      ELSE
+	        ;// Normali case not possible
+	    END_CASE;
+	  END_REGION
+	  
+	  // Save the DB_CurrentRecipe in the DB_Recipes in the load mmemory of the PLC
+	ELSIF (NOT #sxRecipeSaved) AND (NOT #sxListRecipe) THEN
+	  
+	  REGION Save recipe
+	    #sxOperationInProgress := TRUE;
+	    #sxRecipeLoaded := TRUE;
+	    CASE #suiStepSaveRecipe OF
+	      #stepCtrlRecipeNumber: // Control if the REcipe Number is in range of 1 to 255
+	        IF #usiNumRecipe = 0 THEN
+	          #usiNumRecipe := 1;
+	        ELSIF #usiNumRecipe > 255 THEN
+	          #usiNumRecipe := 255;
+	        END_IF;
+	        #CurrentRecipe.RecipeName := #WorkRecipe.RecipeName;
+	        #CurrentRecipe.RecipeCbsType := #WorkRecipe.RecipeCbsType;
+	        #CurrentRecipe.RecipeRawMaterial := #WorkRecipe.RecipeRawMaterial;
+	        #CurrentRecipe.RecipeTrajNumber := #WorkRecipe.RecipeTrajNumber;
+	        IF (#usiProcessPhase = 1) OR (#usiProcessPhase = 2) THEN
+	          #CurrentRecipe.RecipeLayerType[#usiProcessPhase] := #WorkRecipe.RecipeLayerType;
+	        END_IF;
+	        #suiStepSaveRecipe := #stepStartSaveRecipe;
+	        
+	      #stepStartSaveRecipe: // Start to write the source DB to put the recipe in the destination DB
+	        IF (#snWriteDblResult = 16#7002) THEN // Writing is in progress
+	          #suiStepSaveRecipe := #stepSaveRecipe;
+	        ELSIF (#snWriteDblResult > 16#8000) THEN // Reading Error
+	          #wStatus := INT_TO_WORD(#snReadDblResult);
+	        END_IF;
+	        
+	      #stepSaveRecipe: // Waiting for wrinting completed
+	        IF (NOT #sxWriteDblBusy) THEN
+	          #sxRecipeSaved := TRUE;
+	          #sxListRecipe := TRUE;
+	          #suiStepListRecipe := #stepInitList;
+	          #suiStepSaveRecipe := #stepSaveCompleted;
+	        END_IF;
+	        
+	      #stepSaveCompleted:
+	        ;// Do nothing
+	      ELSE
+	        ;// Normali case not possible
+	    END_CASE;
+	  END_REGION
+	  
+	  // Make the list of all the recipe in the data base
+	ELSIF #sxListRecipe THEN
+	  
+	  REGION Load list of recipe
+	    #sxOperationInProgress := TRUE;
+	    CASE #suiStepListRecipe OF
+	      #stepInitList: // Initialise the Recipe list and the indexs
+	        FOR #suicount := 1 TO 255 DO
+	          #aListRecipe[#suicount].RecipeIndex := 0;
+	          #aListRecipe[#suicount].RecipeName := '';
+	        END_FOR;
+	        #suiTotalOfRecipe := 0;
+	        #suiNextRecipeFree := 999;
+	        #susiCurrentIndexList := 0;
+	        #suiCurrentIndexRecipe := 0;
+	        #sxRecipeSelectFound := FALSE;
+	        IF #suiLastRecipe = 0 THEN
+	          #susiMaxLoad := 255;
+	        ELSE
+	          #susiMaxLoad := UINT_TO_USINT(#suiLastRecipe) + 2;
+	          IF #susiMaxLoad > 255 THEN
+	            #susiMaxLoad := 255;
+	          END_IF;
+	        END_IF;
+	        #suiStepListRecipe := #stepCtrlListRecipeNumber;
+	        
+	      #stepCtrlListRecipeNumber: // Control if the Recipe Number is in range of 1 to 255
+	        IF #susiCurrentIndexList < #susiMaxLoad THEN // Not all the recipe in the data base are read
+	          #susiCurrentIndexList += 1;
+	          #suiStepListRecipe := #stepStartListLoadRecipe;
+	        ELSE // All the recipe in the datra base are read
+	          IF (NOT #sxRecipeSelectFound) THEN
+	            #usiNumRecipe := 0;
+	            #usiJobNumberLeft := 0;
+	            #usiJobNumberRight := 0;
+	            #usiProcessPhase := 0;
+	          END_IF;
+	          #sxListRecipe := FALSE;
+	          #sxUpdateDisplayList := TRUE;
+	          #suiStepListRecipe := #stepListLoadCompleted;
+	        END_IF;
+	        
+	      #stepStartListLoadRecipe: // Start to read the source DB to put the recipe in the destination DB
+	        IF (#snListDblResult = 16#7002) THEN // Reading is in progress
+	          #suiStepListRecipe := #stepListLoadRecipe;
+	        ELSIF (#snListDblResult > 16#8000) THEN // Reading Error
+	          #wStatus := INT_TO_WORD(#snListDblResult);
+	        END_IF;
+	        
+	      #stepListLoadRecipe: // Waiting for reading completed
+	        IF (NOT #sxReadDblBusy) AND  (#snListDblResult = 16#7000) AND (#TempRecipe.RecipeName <> '') THEN // Recipe recorded in the data base
+	          #suiCurrentIndexRecipe += 1;
+	          #suiTotalOfRecipe += 1;
+	          #aListRecipe[#suiCurrentIndexRecipe].RecipeIndex := #susiCurrentIndexList;
+	          #aListRecipe[#suiCurrentIndexRecipe].RecipeName := #TempRecipe.RecipeName;
+	          IF (#susiCurrentIndexList = #usiNumRecipe) THEN
+	            #sxRecipeSelectFound := TRUE;
+	          END_IF;
+	          #suiStepListRecipe := #StepListWaitOneCycle;
+	        ELSIF (NOT #sxReadDblBusy) AND  (#snListDblResult = 16#7000) AND (#TempRecipe.RecipeName = '') THEN // No recipe recorded in the data base
+	          IF (#suiNextRecipeFree = 999) THEN
+	            #xNoMoreRecipeAvailable := FALSE;
+	            #suiNextRecipeFree := #susiCurrentIndexList;
+	          END_IF;
+	          #suiStepListRecipe := #StepListWaitOneCycle;
+	        END_IF;
+	        
+	      #StepListWaitOneCycle:
+	        IF (#snListDblResult = 16#7000) OR (#snListDblResult = 16#0) THEN
+	          #suiStepListRecipe := #stepCtrlListRecipeNumber;
+	          #suiLastRecipe := #suiCurrentIndexRecipe;
+	        END_IF;
+	        
+	      #stepListLoadCompleted: // list OF recipe available completed
+	        ;// Do nothing
+	        
+	      ELSE
+	        ;// Normali case not possible
+	    END_CASE;
+	  END_REGION
+	  
+	  // Waiting Operator request
+	ELSIF (#sxRecipeLoaded AND #sxRecipeSaved AND (NOT #sxListRecipe)) THEN
+	  
+	  REGION Waiting command Load, Save, New, List or Delecte
+	    #sxOperationInProgress := FALSE;
+	    IF #xListRecipe THEN // User press List Recipe
+	      #sxOperationInProgress := TRUE;
+	      #xListRecipe := FALSE;
+	      #suiStepListRecipe := #stepInitList;
+	      #sxListRecipe := TRUE;
+	      
+	    ELSIF #xLoadRecipe THEN // User Press load recipe
+	      #sxOperationInProgress := TRUE;
+	      #xLoadRecipe := FALSE;
+	      #suiStepLoadRecipe := #stepCtrlRecipeNumber;
+	      #sxRecipeLoaded := FALSE;
+	      
+	    ELSIF #xNewRecipe THEN // User press new free recipe
+	      #xNewRecipe := FALSE;
+	      IF #suiNextRecipeFree <> 0 THEN
+	        #sxOperationInProgress := TRUE;
+	        #usiNumRecipe := UINT_TO_USINT(#suiNextRecipeFree); // Select the first free recipe
+	        FOR #suicount := 1 TO 255 DO // Search first free display recipe
+	          IF #aListRecipe[#suicount].RecipeName = '' THEN
+	            #aListRecipe[#suicount].RecipeName := 'New'; // Create a temporari name for display in the list
+	            #aListRecipe[#suicount].RecipeIndex := #usiNumRecipe; // Create a temporari index for display in the list
+	            EXIT; // exit of the for loop
+	          END_IF;
+	        END_FOR;
+	        #suiIndexDisplay := ((((#suicount - 1) / 10) * 10) + 1); // select the new display index
+	        #sxUpdateDisplayList := TRUE; // request update the list
+	        #suiStepLoadRecipe := #stepCtrlRecipeNumber;
+	        #sxRecipeLoaded := FALSE;
+	      ELSE
+	        // No more recipe available
+	        #xNoMoreRecipeAvailable := TRUE;
+	      END_IF;
+	      
+	    ELSIF #xSaveRecipe THEN  // User press Save recipe
+	      #sxOperationInProgress := TRUE;
+	      #xSaveRecipe := FALSE;
+	      #suiStepSaveRecipe := #stepCtrlRecipeNumber;
+	      #sxRecipeSaved := FALSE;
+	      
+	    ELSIF #xDeleteRecipe THEN // User press delete recipe
+	      #sxOperationInProgress := TRUE;
+	      #xDeleteRecipe := FALSE;
+	      #CurrentRecipe := #RecipeEmpty;
+	      #WorkRecipe.RecipeName := #CurrentRecipe.RecipeName;
+	      #WorkRecipe.RecipeCbsType := #CurrentRecipe.RecipeCbsType;
+	      #WorkRecipe.RecipeRawMaterial := #CurrentRecipe.RecipeRawMaterial;
+	      #WorkRecipe.RecipeTrajNumber := #CurrentRecipe.RecipeTrajNumber;
+	      #WorkRecipe.RecipeLayerType.JobTableLeft[0] := #RecipeEmpty.RecipeLayerType[1].JobTableLeft[0];
+	      #WorkRecipe.RecipeLayerType.JobTableRight[0] := #RecipeEmpty.RecipeLayerType[1].JobTableRight[0];
+	      #usiJobNumberLeft := 0;
+	      #usiJobNumberRight := 0;
+	      #usiProcessPhase := 0;
+	      #suiStepSaveRecipe := #stepCtrlRecipeNumber;
+	      #sxRecipeSaved := FALSE;
+	      
+	    ELSIF #xUnloadRecipe THEN
+	      #sxOperationInProgress := TRUE;
+	      #xUnloadRecipe := FALSE;
+	      #usiNumRecipe := 0;
+	      #CurrentRecipe := #RecipeEmpty;
+	      #WorkRecipe.RecipeName := #CurrentRecipe.RecipeName;
+	      #WorkRecipe.RecipeCbsType := #CurrentRecipe.RecipeCbsType;
+	      #WorkRecipe.RecipeRawMaterial := #CurrentRecipe.RecipeRawMaterial;
+	      #WorkRecipe.RecipeTrajNumber := #CurrentRecipe.RecipeTrajNumber;
+	      #WorkRecipe.RecipeLayerType.JobTableLeft[0] := #RecipeEmpty.RecipeLayerType[1].JobTableLeft[0];
+	      #WorkRecipe.RecipeLayerType.JobTableRight[0] := #RecipeEmpty.RecipeLayerType[1].JobTableRight[0];
+	      #usiJobNumberLeft := 0;
+	      #usiJobNumberRight := 0;
+	      #usiProcessPhase := 0;
+	      #sxUpdateDisplayList := TRUE;
+	      
+	    END_IF;
+	  END_REGION
+	  
+	END_IF;
+	
+	REGION Manage list of recipe on HMI
+	  IF #suiIndexDisplay = 0 THEN // Initialization of display index
+	    #suiIndexDisplay := 1;
+	    #sxUpdateDisplayList := TRUE;
+	  ELSIF #xNextRecipe THEN // User press next recipe
+	    #xNextRecipe := FALSE;
+	    IF #suiIndexDisplay <= 241 THEN
+	      #suiIndexDisplay += 10;
+	      #sxUpdateDisplayList := TRUE;
+	    END_IF;
+	  ELSIF #xPrevRecipe THEN // User pres previous recipe
+	    #xPrevRecipe := FALSE;
+	    IF #suiIndexDisplay >= 11 THEN
+	      #suiIndexDisplay -= 10;
+	      #sxUpdateDisplayList := TRUE;
+	    END_IF;
+	  END_IF;
+	  
+	  //IF #sxUpdateDisplayList THEN
+	    //#sxUpdateDisplayList := FALSE;
+	    IF ((#suiIndexDisplay > #suiTotalOfRecipe) AND (#suiIndexDisplay >= 11)) THEN
+	      #suiIndexDisplay -= 10;
+	      #sxUpdateDisplayList := TRUE;
+	    END_IF;
+	    FOR #suiCount_1 := 1 TO 10 DO
+	      #aRecipeList[#suiCount_1].RecipeIndex := #aListRecipe[#suiIndexDisplay + (#suiCount_1 - 1)].RecipeIndex;
+	      #aRecipeList[#suiCount_1].RecipeName := #aListRecipe[#suiIndexDisplay + (#suiCount_1 - 1)].RecipeName;
+	      #aRecipeList[#suiCount_1].RecipeSelected := (#aRecipeList[#suiCount_1].RecipeIndex = #usiNumRecipe) AND (#usiNumRecipe <> 0);
+	      IF #sxOperationInProgress OR #xSandingInProgress THEN
+	        #aRecipeList[#suiCount_1].RecipeIndex := 0;
+	      END_IF;
+	    END_FOR;
+	  //END_IF;
+	  
+	  
+	END_REGION
+	
+	REGION Processing phase change
+	  
+	  IF ((#usiProcessPhase <> #susiMemProcessPhase) AND (#usiProcessPhase <> 0)) THEN
+	    #susiMemProcessPhase := #usiProcessPhase;
+	    #usiJobNumberLeft := 0;
+	    #usiJobNumberRight := 0;
+	    #WorkRecipe.RecipeLayerType := #CurrentRecipe.RecipeLayerType[#usiProcessPhase];
+	    #WorkRecipe.RecipeLayerType.JobTableLeft[0] := #RecipeEmpty.RecipeLayerType[1].JobTableLeft[0];
+	    #WorkRecipe.RecipeLayerType.JobTableRight[0] := #RecipeEmpty.RecipeLayerType[1].JobTableRight[0];
+	  ELSIF ((#usiProcessPhase <> #susiMemProcessPhase) AND (#usiProcessPhase = 0)) THEN
+	    #susiMemProcessPhase := 0;
+	    #usiJobNumberLeft := 0;
+	    #usiJobNumberRight := 0;
+	    #WorkRecipe.RecipeLayerType := #RecipeEmpty.RecipeLayerType[1];
+	    #WorkRecipe.RecipeLayerType.JobTableLeft[0] := #RecipeEmpty.RecipeLayerType[1].JobTableLeft[0];
+	    #WorkRecipe.RecipeLayerType.JobTableRight[0] := #RecipeEmpty.RecipeLayerType[1].JobTableRight[0];
+	  END_IF;
+	  
+	END_REGION
+	
+	REGION Manage Button on HMI
+	  // Display or hide Next button
+	  #xDisplayNextButton := ((#suiIndexDisplay + 9) < #suiTotalOfRecipe);
+	  // Display or hide Previous button
+	  #xDisplayPrevButton := (#suiIndexDisplay > 10);
+	  // Diseable or enable Delte recipe button
+	  #xDiseableDeleteButton := #sxOperationInProgress OR #xSandingInProgress OR (#usiNumRecipe = 0);
+	  // Diseable or enable New recipe button
+	  #xDiseableNewButton := #sxOperationInProgress OR #xSandingInProgress;
+	  // Diseable or enable Save recipe button
+	  #xDiseableSaveButton := #sxOperationInProgress OR (#usiNumRecipe = 0);
+	  // Lock or unlock the modification of the recipe
+	  #xLockRecipe := (#usiNumRecipe = 0) (*OR (#usiProcessPhase = 0)*) OR #xSandingInProgress;
+	  // Lock or unlock selection of job data number
+	  #xLockSelectJobDataNumber := (#usiNumRecipe = 0) OR (#usiProcessPhase = 0);
+	  // Lock or unlock modification of job data Left Robot
+	  #xLockJobDataLeft := (#usiNumRecipe = 0) OR (#usiProcessPhase = 0) OR (#usiJobNumberLeft = 0);
+	  // Lock or unlock modification of job data Right Robot
+	  #xLockJobDataRight := (#usiNumRecipe = 0) OR (#usiProcessPhase = 0) OR (#usiJobNumberRight = 0);
+	  
+	  #miDB_FPLockSelectRecipe(CLK:=(#sxOperationInProgress OR #xSandingInProgress));
+	  #miDB_FNLockSelectRecipe(CLK:=(NOT #sxOperationInProgress) AND (NOT #xSandingInProgress));
+	  
+	  IF #miDB_FPLockSelectRecipe.Q OR #miDB_FNLockSelectRecipe.Q THEN
+	    #sxUpdateDisplayList := TRUE;
+	 END_IF;
+	 
+	END_REGION
+	
+	REGION Function
+	  // Read only one recipe in the data base
+	  #txReqReadRecipe := (#suiStepLoadRecipe = #stepStartLoadRecipe);
+	  #snReadDblResult := READ_DBL(REQ := #txReqReadRecipe, SRCBLK := #aRecipesDB[#usiNumRecipe], BUSY => #sxReadDblBusy, DSTBLK => #CurrentRecipe);
+	  
+	  // Read all the recipe in the data base
+	  #txReqListRecipe := (#suiStepListRecipe = #stepStartListLoadRecipe);
+	  #snListDblResult := READ_DBL(REQ := #txReqListRecipe, SRCBLK := #aRecipesDB[#susiCurrentIndexList], BUSY => #sxListDblBusy, DSTBLK => #TempRecipe);
+	  
+	  // Write the current recipe in the data base
+	  #txReqWriteRecipe := (#suiStepSaveRecipe = #stepStartSaveRecipe);
+	  #snWriteDblResult := WRIT_DBL(REQ := #txReqWriteRecipe, SRCBLK := #CurrentRecipe, BUSY => #sxWriteDblBusy, DSTBLK => #aRecipesDB[#usiNumRecipe]);
+	END_REGION
+	
+	
+	
+END_FUNCTION_BLOCK
+

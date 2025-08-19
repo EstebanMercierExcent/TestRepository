@@ -1,0 +1,507 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Document>
+  <Engineering version="V19" />
+  <SW.Blocks.FC ID="0">
+    <AttributeList>
+      <AutoNumber>false</AutoNumber>
+      <Interface><Sections xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v5">
+  <Section Name="Input" />
+  <Section Name="Output" />
+  <Section Name="InOut" />
+  <Section Name="Temp" />
+  <Section Name="Constant" />
+  <Section Name="Return">
+    <Member Name="Ret_Val" Datatype="Void" />
+  </Section>
+</Sections></Interface>
+      <IsIECCheckEnabled>true</IsIECCheckEnabled>
+      <MemoryLayout>Optimized</MemoryLayout>
+      <Name>FC50_RecipeManage</Name>
+      <Namespace />
+      <Number>50</Number>
+      <ProgrammingLanguage>LAD</ProgrammingLanguage>
+      <SetENOAutomatically>false</SetENOAutomatically>
+    </AttributeList>
+    <ObjectList>
+      <MultilingualText ID="1" CompositionName="Comment">
+        <ObjectList>
+          <MultilingualTextItem ID="2" CompositionName="Items">
+            <AttributeList>
+              <Culture>fr-FR</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+          <MultilingualTextItem ID="3" CompositionName="Items">
+            <AttributeList>
+              <Culture>en-US</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+          <MultilingualTextItem ID="4" CompositionName="Items">
+            <AttributeList>
+              <Culture>es-ES</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+        </ObjectList>
+      </MultilingualText>
+      <SW.Blocks.CompileUnit ID="5" CompositionName="CompileUnits">
+        <AttributeList>
+          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v5">
+  <Parts>
+    <Access Scope="GlobalVariable" UId="21">
+      <Symbol>
+        <Component Name="DB_Exchange" />
+        <Component Name="xSandingInProgress" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="22">
+      <Symbol>
+        <Component Name="DB_RecipeEmpty" />
+        <Component Name="RecipeEmpty" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="23">
+      <Symbol>
+        <Component Name="DB_FromHmi" />
+        <Component Name="xListRecipe" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="24">
+      <Symbol>
+        <Component Name="DB_FromHmi" />
+        <Component Name="xLoadRecipe" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="25">
+      <Symbol>
+        <Component Name="DB_FromHmi" />
+        <Component Name="xNewRecipe" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="26">
+      <Symbol>
+        <Component Name="DB_FromHmi" />
+        <Component Name="xSaveRecipe" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="27">
+      <Symbol>
+        <Component Name="DB_FromHmi" />
+        <Component Name="xDeleteRecipe" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="28">
+      <Symbol>
+        <Component Name="DB_Exchange" />
+        <Component Name="xUnloadRecipe" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="29">
+      <Symbol>
+        <Component Name="DB_FromHmi" />
+        <Component Name="xNextRecipe" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="30">
+      <Symbol>
+        <Component Name="DB_FromHmi" />
+        <Component Name="xPrevRecipe" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="31">
+      <Symbol>
+        <Component Name="DB_CurrentRecipe" />
+        <Component Name="usiCurrentRecipeNumber" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="32">
+      <Symbol>
+        <Component Name="DB_CurrentRecipe" />
+        <Component Name="usiCurrentLayerType" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="33">
+      <Symbol>
+        <Component Name="DB_FromHmi" />
+        <Component Name="LeftRobot" />
+        <Component Name="usiJobNumberDisplay" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="34">
+      <Symbol>
+        <Component Name="DB_FromHmi" />
+        <Component Name="RightRobot" />
+        <Component Name="usiJobNumberDisplay" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="35">
+      <Symbol>
+        <Component Name="DB_CurrentRecipe" />
+        <Component Name="CompleteRecipe" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="36">
+      <Symbol>
+        <Component Name="DB_CurrentRecipe" />
+        <Component Name="WorkRecipe" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="37">
+      <Symbol>
+        <Component Name="DB_Recipes" />
+        <Component Name="aRecipe" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="38">
+      <Symbol>
+        <Component Name="DB_ToHmi" />
+        <Component Name="xDisplayPrevButton" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="39">
+      <Symbol>
+        <Component Name="DB_ToHmi" />
+        <Component Name="xDisplayNextButton" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="40">
+      <Symbol>
+        <Component Name="DB_ToHmi" />
+        <Component Name="xDiseableNewButton" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="41">
+      <Symbol>
+        <Component Name="DB_ToHmi" />
+        <Component Name="xDiseableSaveButton" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="42">
+      <Symbol>
+        <Component Name="DB_ToHmi" />
+        <Component Name="xDiseableDeleteButton" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="43">
+      <Symbol>
+        <Component Name="DB_ToHmi" />
+        <Component Name="xLockRecipe" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="44">
+      <Symbol>
+        <Component Name="DB_ToHmi" />
+        <Component Name="xLockSelectJobDataNumber" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="45">
+      <Symbol>
+        <Component Name="DB_ToHmi" />
+        <Component Name="xLockJobDataLeft" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="46">
+      <Symbol>
+        <Component Name="DB_ToHmi" />
+        <Component Name="xLockJobDataRight" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="47">
+      <Symbol>
+        <Component Name="DB_ToHmi" />
+        <Component Name="xShowPopNoMoreRecipeAvailable" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="48">
+      <Symbol>
+        <Component Name="DB_ToHmi" />
+        <Component Name="aRecipeList" />
+      </Symbol>
+    </Access>
+    <Call UId="49">
+      <CallInfo Name="FB50_ManageRecipe" BlockType="FB">
+        <Instance Scope="GlobalVariable" UId="50">
+          <Component Name="iDB_ManageRecipe" />
+        </Instance>
+        <Parameter Name="xSandingInProgress" Section="Input" Type="Bool" />
+        <Parameter Name="RecipeEmpty" Section="Input" Type="&quot;stRecipe&quot;" />
+        <Parameter Name="xDisplayPrevButton" Section="Output" Type="Bool" />
+        <Parameter Name="xDisplayNextButton" Section="Output" Type="Bool" />
+        <Parameter Name="xDiseableNewButton" Section="Output" Type="Bool" />
+        <Parameter Name="xDiseableSaveButton" Section="Output" Type="Bool" />
+        <Parameter Name="xDiseableDeleteButton" Section="Output" Type="Bool" />
+        <Parameter Name="xLockRecipe" Section="Output" Type="Bool" />
+        <Parameter Name="xLockSelectJobDataNumber" Section="Output" Type="Bool" />
+        <Parameter Name="xLockJobDataLeft" Section="Output" Type="Bool" />
+        <Parameter Name="xLockJobDataRight" Section="Output" Type="Bool" />
+        <Parameter Name="xNoMoreRecipeAvailable" Section="Output" Type="Bool" />
+        <Parameter Name="wStatus" Section="Output" Type="Word" />
+        <Parameter Name="aRecipeList" Section="Output" Type="Array[1..10] of &quot;stRecipeListHMI&quot;" />
+        <Parameter Name="xListRecipe" Section="InOut" Type="Bool" />
+        <Parameter Name="xLoadRecipe" Section="InOut" Type="Bool" />
+        <Parameter Name="xNewRecipe" Section="InOut" Type="Bool" />
+        <Parameter Name="xSaveRecipe" Section="InOut" Type="Bool" />
+        <Parameter Name="xDeleteRecipe" Section="InOut" Type="Bool" />
+        <Parameter Name="xUnloadRecipe" Section="InOut" Type="Bool" />
+        <Parameter Name="xNextRecipe" Section="InOut" Type="Bool" />
+        <Parameter Name="xPrevRecipe" Section="InOut" Type="Bool" />
+        <Parameter Name="usiNumRecipe" Section="InOut" Type="USInt" />
+        <Parameter Name="usiProcessPhase" Section="InOut" Type="USInt" />
+        <Parameter Name="usiJobNumberLeft" Section="InOut" Type="USInt" />
+        <Parameter Name="usiJobNumberRight" Section="InOut" Type="USInt" />
+        <Parameter Name="CurrentRecipe" Section="InOut" Type="&quot;stRecipe&quot;" />
+        <Parameter Name="WorkRecipe" Section="InOut" Type="&quot;stWorkRecipe&quot;" />
+        <Parameter Name="aRecipesDB" Section="InOut" Type="Array[0..256] of &quot;stRecipe&quot;" />
+      </CallInfo>
+    </Call>
+  </Parts>
+  <Wires>
+    <Wire UId="52">
+      <Powerrail />
+      <NameCon UId="49" Name="en" />
+    </Wire>
+    <Wire UId="53">
+      <IdentCon UId="21" />
+      <NameCon UId="49" Name="xSandingInProgress" />
+    </Wire>
+    <Wire UId="54">
+      <IdentCon UId="22" />
+      <NameCon UId="49" Name="RecipeEmpty" />
+    </Wire>
+    <Wire UId="55">
+      <IdentCon UId="23" />
+      <NameCon UId="49" Name="xListRecipe" />
+    </Wire>
+    <Wire UId="56">
+      <IdentCon UId="24" />
+      <NameCon UId="49" Name="xLoadRecipe" />
+    </Wire>
+    <Wire UId="57">
+      <IdentCon UId="25" />
+      <NameCon UId="49" Name="xNewRecipe" />
+    </Wire>
+    <Wire UId="58">
+      <IdentCon UId="26" />
+      <NameCon UId="49" Name="xSaveRecipe" />
+    </Wire>
+    <Wire UId="59">
+      <IdentCon UId="27" />
+      <NameCon UId="49" Name="xDeleteRecipe" />
+    </Wire>
+    <Wire UId="60">
+      <IdentCon UId="28" />
+      <NameCon UId="49" Name="xUnloadRecipe" />
+    </Wire>
+    <Wire UId="61">
+      <IdentCon UId="29" />
+      <NameCon UId="49" Name="xNextRecipe" />
+    </Wire>
+    <Wire UId="62">
+      <IdentCon UId="30" />
+      <NameCon UId="49" Name="xPrevRecipe" />
+    </Wire>
+    <Wire UId="63">
+      <IdentCon UId="31" />
+      <NameCon UId="49" Name="usiNumRecipe" />
+    </Wire>
+    <Wire UId="64">
+      <IdentCon UId="32" />
+      <NameCon UId="49" Name="usiProcessPhase" />
+    </Wire>
+    <Wire UId="65">
+      <IdentCon UId="33" />
+      <NameCon UId="49" Name="usiJobNumberLeft" />
+    </Wire>
+    <Wire UId="66">
+      <IdentCon UId="34" />
+      <NameCon UId="49" Name="usiJobNumberRight" />
+    </Wire>
+    <Wire UId="67">
+      <IdentCon UId="35" />
+      <NameCon UId="49" Name="CurrentRecipe" />
+    </Wire>
+    <Wire UId="68">
+      <IdentCon UId="36" />
+      <NameCon UId="49" Name="WorkRecipe" />
+    </Wire>
+    <Wire UId="69">
+      <IdentCon UId="37" />
+      <NameCon UId="49" Name="aRecipesDB" />
+    </Wire>
+    <Wire UId="70">
+      <NameCon UId="49" Name="xDisplayPrevButton" />
+      <IdentCon UId="38" />
+    </Wire>
+    <Wire UId="71">
+      <NameCon UId="49" Name="xDisplayNextButton" />
+      <IdentCon UId="39" />
+    </Wire>
+    <Wire UId="72">
+      <NameCon UId="49" Name="xDiseableNewButton" />
+      <IdentCon UId="40" />
+    </Wire>
+    <Wire UId="73">
+      <NameCon UId="49" Name="xDiseableSaveButton" />
+      <IdentCon UId="41" />
+    </Wire>
+    <Wire UId="74">
+      <NameCon UId="49" Name="xDiseableDeleteButton" />
+      <IdentCon UId="42" />
+    </Wire>
+    <Wire UId="75">
+      <NameCon UId="49" Name="xLockRecipe" />
+      <IdentCon UId="43" />
+    </Wire>
+    <Wire UId="76">
+      <NameCon UId="49" Name="xLockSelectJobDataNumber" />
+      <IdentCon UId="44" />
+    </Wire>
+    <Wire UId="77">
+      <NameCon UId="49" Name="xLockJobDataLeft" />
+      <IdentCon UId="45" />
+    </Wire>
+    <Wire UId="78">
+      <NameCon UId="49" Name="xLockJobDataRight" />
+      <IdentCon UId="46" />
+    </Wire>
+    <Wire UId="79">
+      <NameCon UId="49" Name="xNoMoreRecipeAvailable" />
+      <IdentCon UId="47" />
+    </Wire>
+    <Wire UId="80">
+      <NameCon UId="49" Name="wStatus" />
+      <OpenCon UId="51" />
+    </Wire>
+    <Wire UId="81">
+      <NameCon UId="49" Name="aRecipeList" />
+      <IdentCon UId="48" />
+    </Wire>
+  </Wires>
+</FlgNet></NetworkSource>
+          <ProgrammingLanguage>LAD</ProgrammingLanguage>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="6" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="7" CompositionName="Items">
+                <AttributeList>
+                  <Culture>fr-FR</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="8" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="9" CompositionName="Items">
+                <AttributeList>
+                  <Culture>es-ES</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+          <MultilingualText ID="A" CompositionName="Title">
+            <ObjectList>
+              <MultilingualTextItem ID="B" CompositionName="Items">
+                <AttributeList>
+                  <Culture>fr-FR</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="C" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Management of recipde (Load, Save, Creat )</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="D" CompositionName="Items">
+                <AttributeList>
+                  <Culture>es-ES</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Blocks.CompileUnit>
+      <SW.Blocks.CompileUnit ID="E" CompositionName="CompileUnits">
+        <AttributeList>
+          <NetworkSource />
+          <ProgrammingLanguage>LAD</ProgrammingLanguage>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="F" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="10" CompositionName="Items">
+                <AttributeList>
+                  <Culture>fr-FR</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="11" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="12" CompositionName="Items">
+                <AttributeList>
+                  <Culture>es-ES</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+          <MultilingualText ID="13" CompositionName="Title">
+            <ObjectList>
+              <MultilingualTextItem ID="14" CompositionName="Items">
+                <AttributeList>
+                  <Culture>fr-FR</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="15" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+              <MultilingualTextItem ID="16" CompositionName="Items">
+                <AttributeList>
+                  <Culture>es-ES</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Blocks.CompileUnit>
+      <MultilingualText ID="17" CompositionName="Title">
+        <ObjectList>
+          <MultilingualTextItem ID="18" CompositionName="Items">
+            <AttributeList>
+              <Culture>fr-FR</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+          <MultilingualTextItem ID="19" CompositionName="Items">
+            <AttributeList>
+              <Culture>en-US</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+          <MultilingualTextItem ID="1A" CompositionName="Items">
+            <AttributeList>
+              <Culture>es-ES</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+        </ObjectList>
+      </MultilingualText>
+    </ObjectList>
+  </SW.Blocks.FC>
+</Document>

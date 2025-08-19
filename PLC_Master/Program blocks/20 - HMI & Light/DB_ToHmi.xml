@@ -1,0 +1,955 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Document>
+  <Engineering version="V19" />
+  <SW.Blocks.GlobalDB ID="0">
+    <AttributeList>
+      <AutoNumber>false</AutoNumber>
+      <DBAccessibleFromOPCUA>false</DBAccessibleFromOPCUA>
+      <DBAccessibleFromWebserver>false</DBAccessibleFromWebserver>
+      <Interface><Sections xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v5">
+  <Section Name="Static">
+    <Member Name="xShowPopReqChangeBigbag" Datatype="Bool">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Show Popup change Bigbag requested</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="xShowPopNoMoreRecipeAvailable" Datatype="Bool">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Show Popup no more recipe available in the data base</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="xSafetyState" Datatype="Bool">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">Safety State</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="xDiseableRecipeButton" Datatype="Bool">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">Diseable all button for manage recipe</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="xDisplayPrevButton" Datatype="Bool">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">Display previous button in recipe screen</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="xDisplayNextButton" Datatype="Bool">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">Display next button in recipe screen</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="xDiseableNewButton" Datatype="Bool">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">Diseable new recipe button</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="xDiseableSaveButton" Datatype="Bool">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">Diseable save recipe button</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="xDiseableDeleteButton" Datatype="Bool">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">Diseable delete recipe button</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="xLockRecipe" Datatype="Bool">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">Lock recipe during production</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="xLockSelectJobDataNumber" Datatype="Bool">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">Lock selection of job data number</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="xLockJobDataLeft" Datatype="Bool">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">Lock modification Job Data left robot</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="xLockJobDataRight" Datatype="Bool">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">Lock modification Job Data right robot</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="xVacuumPumpRunning" Datatype="Bool">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+    </Member>
+    <Member Name="xVacuumDriveActivated" Datatype="Bool">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+    </Member>
+    <Member Name="xLockMaintenance" Datatype="Bool">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">Lock button to switch in Maintenance mode</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="xLockSemiAuto" Datatype="Bool">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">Lock button to switch in Semi-Auto mode</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="xHomePositionR1" Datatype="Bool">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">Robot 1 in Home Position</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="xHomePositionR2" Datatype="Bool">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">Robot 2 in Home Position</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="xAccessDoor" Datatype="Bool">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">Access door closed</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="xCaptiveKey" Datatype="Bool">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">Captive key on contact switch</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="xLightBeam" Datatype="Bool">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">Light Beam clear</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="xCbsGate" Datatype="Bool">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">CBS Gate closed</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="nGlobalState" Datatype="Int">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">Cell global state</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="wVacuumState" Datatype="Word">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+    </Member>
+    <Member Name="uiProdRecordMin" Datatype="UInt">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">Mini record number</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="uiProdRecordMax" Datatype="UInt">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">Maxi record number</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="uiFlatRecMinLeftRobot" Datatype="UInt">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">Mini record number for Flatness Left robot</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="uiFlatRecMaxLeftRobot" Datatype="UInt">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">Maxi record number for Flatness Left robot</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="uiFlatRecMinRightRobot" Datatype="UInt">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">Mini record number for Flatness Right robot</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="uiFlatRecMaxRightRobot" Datatype="UInt">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">Maxi record number for Flatness Right robot</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="uiNbrDisplyedLine" Datatype="UInt">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">Number of displayed lime of production</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="uiFirstRecordDisplayed" Datatype="UInt">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">First record displayed</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="uiLastRecordDisplayed" Datatype="UInt">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">Last record displayed</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="sVacuumRunningTime" Datatype="String[15]">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+    </Member>
+    <Member Name="LeftRobot" Datatype="Struct">
+      <Member Name="xRobotInAuto" Datatype="Bool">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="xRobotInManu" Datatype="Bool">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="xRobotReqReset" Datatype="Bool">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="xRecipeInProgress" Datatype="Bool">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="xPathInProgress" Datatype="Bool">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+        <Comment>
+          <MultiLanguageText Lang="en-US">Service path in progress</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="xPathStopped" Datatype="Bool">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+        <Comment>
+          <MultiLanguageText Lang="en-US">Service path stopped</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="xPathCancelled" Datatype="Bool">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+        <Comment>
+          <MultiLanguageText Lang="en-US">Service path cancelled</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="xContactState" Datatype="Bool">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+        <Comment>
+          <MultiLanguageText Lang="en-US">State of the FerRobotic head contact</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="xShowPopRemoveDisk" Datatype="Bool" />
+      <Member Name="xShowPopPickupDisk" Datatype="Bool" />
+      <Member Name="xShowPopFlatnessFault" Datatype="Bool" />
+      <Member Name="xMagazineEmpty" Datatype="Bool">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="xRangeFinderDetection" Datatype="Bool">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="xValveOpen" Datatype="Bool">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="xValveClosed" Datatype="Bool">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="uiRangeFinderValue" Datatype="UInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="nActualForce" Datatype="Int">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+        <Comment>
+          <MultiLanguageText Lang="en-US">Actual force on FerRobotic head</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="rActualPosition" Datatype="Real">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+        <Comment>
+          <MultiLanguageText Lang="en-US">Actual position of the FerRobotic head</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="uiActualJobDataNumber" Datatype="UInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="uiNbDiskUsed" Datatype="UInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="uiRobotStatus" Datatype="UInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="uiSetSpeed" Datatype="UInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="uiRobotSpeed" Datatype="UInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="uiPaperChangeDistance" Datatype="UInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="uiCounterPulse_X" Datatype="UInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="uiCounterPulse_Z" Datatype="UInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="uiGreaseFault_X" Datatype="UInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="uiGreaseFault_Z" Datatype="UInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="uiDistanceSandingDisk" Datatype="UInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="uiActualRobotSpeed" Datatype="UInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+        <Comment>
+          <MultiLanguageText Lang="en-US">Actual speed of theTCP of the robot</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="uiDistanceBeforeGreasingX" Datatype="UInt" />
+      <Member Name="uiDistanceBeforeGreasingZ" Datatype="UInt" />
+      <Member Name="udiOdometer_X" Datatype="UDInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="udiOdometer_Z" Datatype="UDInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="sRunTime" Datatype="String[12]">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="sPauseTime" Datatype="String[12]">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="sFaultTime" Datatype="String[12]">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="sRobotPowerOnTime" Datatype="String[15]">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="sRobotDriveOnTime" Datatype="String[15]">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="IB_Safety500" Datatype="SInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="IB_Input100" Datatype="SInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="IB_Input101" Datatype="SInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="IB_Input102" Datatype="SInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="IB_Input103" Datatype="SInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="IN_Input600" Datatype="Int">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="IN_Input602" Datatype="Int">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="IN_Input604" Datatype="Int">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="IN_Input606" Datatype="Int">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="OB_Safety508" Datatype="SInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="OB_Output100" Datatype="SInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="OB_Output101" Datatype="SInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="IB_Fast90" Datatype="SInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+    </Member>
+    <Member Name="RightRobot" Datatype="Struct">
+      <Member Name="xRobotInAuto" Datatype="Bool">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="xRobotInManu" Datatype="Bool">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="xRobotReqReset" Datatype="Bool">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="xRecipeInProgress" Datatype="Bool">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="xPathInProgress" Datatype="Bool">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+        <Comment>
+          <MultiLanguageText Lang="en-US">Service path in progress</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="xPathStopped" Datatype="Bool">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+        <Comment>
+          <MultiLanguageText Lang="en-US">Service path stopped</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="xPathCancelled" Datatype="Bool">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+        <Comment>
+          <MultiLanguageText Lang="en-US">Service path cancelled</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="xContactState" Datatype="Bool">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+        <Comment>
+          <MultiLanguageText Lang="en-US">State of the FerRobotic head contact</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="xShowPopRemoveDisk" Datatype="Bool" />
+      <Member Name="xShowPopPickupDisk" Datatype="Bool" />
+      <Member Name="xShowPopFlatnessFault" Datatype="Bool" />
+      <Member Name="xMagazineEmpty" Datatype="Bool">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="xRangeFinderDetection" Datatype="Bool">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="xValveOpen" Datatype="Bool">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="xValveClosed" Datatype="Bool">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="uiRangeFinderValue" Datatype="UInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="nActualForce" Datatype="Int">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+        <Comment>
+          <MultiLanguageText Lang="en-US">Actual force on FerRobotic head</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="rActualPosition" Datatype="Real">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+        <Comment>
+          <MultiLanguageText Lang="en-US">Actual position of the FerRobotic head</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="uiActualJobDataNumber" Datatype="UInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="uiNbDiskUsed" Datatype="UInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="uiRobotStatus" Datatype="UInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="uiSetSpeed" Datatype="UInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="uiRobotSpeed" Datatype="UInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="uiPaperChangeDistance" Datatype="UInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="uiCounterPulse_X" Datatype="UInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="uiCounterPulse_Z" Datatype="UInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="uiGreaseFault_X" Datatype="UInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="uiGreaseFault_Z" Datatype="UInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="uiDistanceSandingDisk" Datatype="UInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="uiActualRobotSpeed" Datatype="UInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+        <Comment>
+          <MultiLanguageText Lang="en-US">Actual speed of theTCP of the robot</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="uiDistanceBeforeGreasingX" Datatype="UInt" />
+      <Member Name="uiDistanceBeforeGreasingZ" Datatype="UInt" />
+      <Member Name="udiOdometer_X" Datatype="UDInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="udiOdometer_Z" Datatype="UDInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="sRunTime" Datatype="String[12]">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="sPauseTime" Datatype="String[12]">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="sFaultTime" Datatype="String[12]">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="sRobotPowerOnTime" Datatype="String[15]">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="sRobotDriveOnTime" Datatype="String[15]">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="IB_Safety500" Datatype="SInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="IB_Input100" Datatype="SInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="IB_Input101" Datatype="SInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="IB_Input102" Datatype="SInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="IB_Input103" Datatype="SInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="IN_Input600" Datatype="Int">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="IN_Input602" Datatype="Int">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="IN_Input604" Datatype="Int">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="IN_Input606" Datatype="Int">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="OB_Safety508" Datatype="SInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="OB_Output100" Datatype="SInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="OB_Output101" Datatype="SInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="IB_Fast90" Datatype="SInt">
+        <AttributeList>
+          <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+        </AttributeList>
+      </Member>
+    </Member>
+    <Member Name="aRecipeList" Datatype="Array[1..10] of &quot;stRecipeListHMI&quot;">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">List of the recipe name display on HMI</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="DataSentronMainPanel" Datatype="&quot;Sentron_PAC&quot;">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">Sentron main panel data</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="DateSentronLeftRobot" Datatype="&quot;Sentron_PAC&quot;">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">Sentron left robot data</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="DataSentronRightRobot" Datatype="&quot;Sentron_PAC&quot;">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">Sentron right robot data</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="Fault" Datatype="Struct">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Member Name="wFerRoboticLeft" Datatype="Word" />
+      <Member Name="wManageRobotLeft" Datatype="Word" />
+      <Member Name="wOtherLeft" Datatype="Word" />
+      <Member Name="wRobotLeft" Datatype="Word" />
+      <Member Name="wVacuumValveLeft" Datatype="Word" />
+      <Member Name="wFerRoboticManageLeft" Datatype="Word" />
+      <Member Name="wFault07" Datatype="Word" />
+      <Member Name="wFault08" Datatype="Word" />
+      <Member Name="wFerRoboticRight" Datatype="Word" />
+      <Member Name="wManageRobotRight" Datatype="Word" />
+      <Member Name="wOtherRight" Datatype="Word" />
+      <Member Name="wRobotRight" Datatype="Word" />
+      <Member Name="wVacuumValveRight" Datatype="Word" />
+      <Member Name="wFerRoboticManageRight" Datatype="Word" />
+      <Member Name="wFault11" Datatype="Word" />
+      <Member Name="wFault12" Datatype="Word" />
+      <Member Name="wSafetFault" Datatype="Word" />
+      <Member Name="wVacuumFault" Datatype="Word" />
+      <Member Name="wSafetyModule" Datatype="Word" />
+      <Member Name="wOtherMaster" Datatype="Word" />
+      <Member Name="wFault15" Datatype="Word" />
+      <Member Name="wFault16" Datatype="Word" />
+      <Member Name="wFault17" Datatype="Word" />
+      <Member Name="wFault18" Datatype="Word" />
+    </Member>
+    <Member Name="Warning" Datatype="Struct">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Member Name="wSafetyComp" Datatype="Word" />
+      <Member Name="wWarnigLeft" Datatype="Word" />
+      <Member Name="wWarnigRight" Datatype="Word" />
+      <Member Name="wWarnig04" Datatype="Word" />
+      <Member Name="wWarnig05" Datatype="Word" />
+      <Member Name="wWarnig06" Datatype="Word" />
+      <Member Name="wWarnig07" Datatype="Word" />
+      <Member Name="wWarnig08" Datatype="Word" />
+      <Member Name="wWarnig09" Datatype="Word" />
+      <Member Name="wWarnig10" Datatype="Word" />
+    </Member>
+    <Member Name="Message" Datatype="Struct">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Member Name="wMessage01" Datatype="Word" />
+      <Member Name="wMessage02" Datatype="Word" />
+      <Member Name="wMessage03" Datatype="Word" />
+      <Member Name="wMessage04" Datatype="Word" />
+    </Member>
+    <Member Name="aDisplayProdData" Datatype="Array[0..9] of &quot;stProductionRecord&quot;">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+    </Member>
+    <Member Name="DisplayFlatRecLeftRobot" Datatype="&quot;stFlatnessCtrlRecord&quot;">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+    </Member>
+    <Member Name="DisplayFlatRecRightRobot" Datatype="&quot;stFlatnessCtrlRecord&quot;">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+    </Member>
+  </Section>
+</Sections></Interface>
+      <MemoryLayout>Optimized</MemoryLayout>
+      <MemoryReserve>100</MemoryReserve>
+      <Name>DB_ToHmi</Name>
+      <Namespace />
+      <Number>28</Number>
+      <ProgrammingLanguage>DB</ProgrammingLanguage>
+    </AttributeList>
+    <ObjectList>
+      <MultilingualText ID="1" CompositionName="Comment">
+        <ObjectList>
+          <MultilingualTextItem ID="2" CompositionName="Items">
+            <AttributeList>
+              <Culture>fr-FR</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+          <MultilingualTextItem ID="3" CompositionName="Items">
+            <AttributeList>
+              <Culture>en-US</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+          <MultilingualTextItem ID="4" CompositionName="Items">
+            <AttributeList>
+              <Culture>es-ES</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+        </ObjectList>
+      </MultilingualText>
+      <MultilingualText ID="5" CompositionName="Title">
+        <ObjectList>
+          <MultilingualTextItem ID="6" CompositionName="Items">
+            <AttributeList>
+              <Culture>fr-FR</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+          <MultilingualTextItem ID="7" CompositionName="Items">
+            <AttributeList>
+              <Culture>en-US</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+          <MultilingualTextItem ID="8" CompositionName="Items">
+            <AttributeList>
+              <Culture>es-ES</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+        </ObjectList>
+      </MultilingualText>
+    </ObjectList>
+  </SW.Blocks.GlobalDB>
+</Document>

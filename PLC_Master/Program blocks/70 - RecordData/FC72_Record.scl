@@ -1,0 +1,53 @@
+﻿FUNCTION "FC72_Record" : Void
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      uiPaperUsedRobot1 : UInt;
+      uiPaperUsedRobot2 : UInt;
+   END_VAR
+
+   VAR_IN_OUT 
+      ProdData : "stProductionRecord";
+   END_VAR
+
+   VAR_TEMP 
+      tdtlLocal {InstructionName := 'DTL'; LibVersion := '1.0'} : DTL;
+      tnReturnValue : Int;
+      tdDate : Date;
+      ttodTime : Time_Of_Day;
+      tdiRecordTime : DInt;
+      tdiMaxTime : DInt;
+      tdiCurrentTime : DInt;
+      tdiTemp : DInt;
+   END_VAR
+
+   VAR CONSTANT 
+      ctodMaxTime : Time_Of_Day := TOD#23:59:59;
+   END_VAR
+
+
+BEGIN
+	// Read local date and time
+	#tnReturnValue := RD_LOC_T(OUT => #tdtlLocal);
+	#tdDate := DTL_TO_DATE(#tdtlLocal);
+	#ttodTime := DTL_TO_TOD(#tdtlLocal);
+	
+	// Control if same day or next day
+	IF #tdDate <> #ProdData.dDate THEN
+	  #tdiRecordTime := TOD_TO_DINT(#ProdData.todTime);
+	  #tdiCurrentTime := TOD_TO_DINT(#ttodTime);
+	  #tdiMaxTime := TOD_TO_DINT(#ProdData.todTime);
+	  #tdiTemp := (#tdiMaxTime - #tdiRecordTime) + #tdiCurrentTime;
+	  
+	ELSE
+	  #tdiRecordTime := TOD_TO_DINT(#ProdData.todTime);
+	  #tdiCurrentTime := TOD_TO_DINT(#ttodTime);
+	  #tdiTemp := (#tdiCurrentTime - #tdiRecordTime);
+	  
+	END_IF;
+	
+	#ProdData.tCycleTime := DINT_TO_TOD(#tdiTemp);
+	
+	#ProdData.uiPaperUsed := #uiPaperUsedRobot1 + #uiPaperUsedRobot2;
+END_FUNCTION
+

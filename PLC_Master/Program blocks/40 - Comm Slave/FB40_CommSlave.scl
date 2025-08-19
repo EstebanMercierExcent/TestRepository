@@ -1,0 +1,672 @@
+﻿FUNCTION_BLOCK "FB40_CommSlave"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      InFromSlave { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : "stSlaveToMaster";   // Communication data from slave PLC
+      xDryRun { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Running in DryRun
+      xResetGrafcet { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Reset robot communication grafcet in slave PLC
+      xAutoMode { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Automatic mode
+      xSemiAutoMode { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Semi-automatic mode
+      xMaintenanceMode { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Maintenance mode
+      xReset { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Command reset (Fault or safety)
+      xPulseSeconde { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Bit 1 pulse each second
+      xEnableStartRobot { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Operator Enable start robot
+      xGlobalSafety { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Global safety srate of the cell
+      xCbsDoorAccessClosed { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // CBS door access closed
+      xAccessReq { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Access requested to open the door
+      xValideOperation { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Validation Operator to remove or Put disk on FerRobotic head
+      xValideFault { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Validation Operator of Flatness fault
+      xVaccumPumpRunning { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Vacuum Pump is running - zero speed detection
+      xVacuumRunning { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Vacuum is running
+      xOtherRobotHasStarted { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Robot on other side has started
+      xOtherRobotFinished { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Robot on other side finished
+      xBothRobotFinished { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Both robot finished
+      xReqChangePaper { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Operator request changing paper
+      xMaintStartProg { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Maintenance normal start
+      xMaintStartMain { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Maintenance start main
+      usiRawMaterial { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : USInt;   // Raw materiel selected
+      uiServicePathNum { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;   // Service Path Number
+      xParamManu { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : "stFerRoboticParam";   // Manual parameter for FerRobotic Head
+      xCmdManuLockGimball { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Manual command Lock Gimball
+      xCmdManuLockEccentric1 { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Manual command Lock Eccentric 1
+      xCmdManuLockEccentric2 { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Manual command Lock Eccentric 2
+      xCmdManuLockEccentric3 { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Manual command Lock Eccentric 3
+      xCmdManuEnableRotate { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Manual command Enable Rotation
+      xCmdManuRemoveConfig { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Manual command for activate the Remove config on FerRobotic Head
+      xCmdManuPickupConfig { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Manual command for activate the Pickup config on FerRobotic Head
+      xCmdManuFlatnessConfig { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Manual command for activate the Flatness check config on FerRobotic Head
+      xCmdManuOpenVacValve { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Manual commande to open Vacuum valve
+      xCmdManuCloseVaValve { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Manual commande to close Vacuum valve
+      xForceLubricationX { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Force to start greasing pump for X axis
+      xForceLubricationZ { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Force to start greasing pump for Z axis
+      xLightTest { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Command Light test
+   END_VAR
+
+   VAR_OUTPUT 
+      OutToSlave { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : "stMasterToSlave";   // Communication data to slave PLC
+      xRobotInAuto { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Robot is automatic mode
+      xRobotInManu { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Robot is in manual mode
+      xRobotInHome { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Robot is in home position
+      xRobotReqReset { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Robot request a reset command
+      xRobotStopped { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Robot stopped
+      xWarningStart { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Warning before start robot
+      xReqVacuum { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Request enable vacuum
+      xRecipeInProgress { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Sanding process is in progress
+      xProductionRunning { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Production Running for Teep track
+   END_VAR
+   VAR_OUTPUT RETAIN
+      xRobotHasStarted { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Robot has started
+   END_VAR
+   VAR_OUTPUT 
+      xWaitOtherRobotFinished { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Wait robot on other side finished
+      xWaitBothRobotFinished { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Wait both robot finished
+      xMagazineEmpty { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      xShowPopRemoveDisk { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      xShowPopPickupDisk { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      xShowPopFlatnessFault { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      uiJobDataNumber { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;   // Actual job data number
+      xPathInProgress { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Service path in progress
+      xPathStopped { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Service path stopped
+      xPathCancelled { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Service path cancelled
+      xContactState { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // State of the FerRobotic head contact
+      xVacValveOpen { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Vacuum valve open
+      xVacValveClosed { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Vacuum valve close
+      nActualForce { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Int;   // Actual force on FerRobotic head
+      uiSetSpeed { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;   // Speed set in Ferrobotic head
+      uiRobotSpeed { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;   // Speed set to the robot
+      uiPaperChangeDistance { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      rActualPosition { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;   // Actual position of the FerRobotic head
+      xRangeFinderDetection { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      uiRangeFinderValue { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      uiCounterPulse_X { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      uiCounterPulse_Z { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      uiGreaseFault_X { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      uiGreaseFault_Z { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      uiDistanceSandingDisk { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      uiActualRobotSpeed { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;   // Actual speed of theTCP of the robot
+      udiOdometer_X { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UDInt;
+      udiOdometer_Z { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UDInt;
+      uiDistanceBeforeGreasingX { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      uiDistanceBeforeGreasingZ { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      uiDiskUsed { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      uiRobotStatus { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      udiFaultTime { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UDInt;
+      udiRunTime { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UDInt;
+      udiPauseTime { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UDInt;
+      udiRobotPowerOnTime { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UDInt;
+      udiRobotDriveOnTime { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UDInt;
+      bInput100 { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : SInt;
+      bInput101 { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : SInt;
+      bInput102 { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : SInt;
+      bInput103 { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : SInt;
+      bInputFast90 { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : SInt;
+      bInputSafety500 { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : SInt;
+      bOutput100 { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : SInt;
+      bOutput101 { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : SInt;
+      bOutputSafety508 { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : SInt;
+      nInput600 { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Int;
+      nInput602 { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Int;
+      nInput604 { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Int;
+      nInput606 { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Int;
+      wFaultFerRobotic { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Word;   // Fault on the FerRobotic head
+      wFaultManageRobot { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Word;   // Fault on fonction management robot on the slave PLC
+      wFaultRobot { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Word;   // Fault on the robot
+      wFaultOther { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Word;
+      wFaultVacuumValve { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Word;
+      wFaultFerRoboticManage { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Word;
+      wWarningDiskTrayEmpty { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Word;
+   END_VAR
+
+   VAR_IN_OUT 
+      xStartRecipe { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Command start recipe selected
+      xStopRecipe { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Command stop recipe in progress
+      xCancelRecipe { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Command cancel Recipe in progress
+      xStartSanding { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Start Sanding a new CBS
+      xEndSanding { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // End sanding
+      xRobotUsed { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Robot was used for this CBS
+      xStartPath { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Command start service path
+      xStopPath { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Command stop service path
+      xCancelPath { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Command Cancel service path
+      usiSandingType { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : USInt;   // Sanding type selected
+      usiTrajNumber { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : USInt;   // Robot trajectory number selected
+      stFlatnessCtrlData : "stFlatnessData";
+      aListJobData : Array[*] of "stJobData";   // Job Data list for current CBS program
+   END_VAR
+
+   VAR 
+      sxMemStartRecipe { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      sxMemPulse { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      sxWarningFinished { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      sxEnableWarning { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+   END_VAR
+   VAR RETAIN
+      sxMemNewCBS { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      sxMemoryEndOfCBS { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+   END_VAR
+   VAR 
+      suiStep { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      suiMaxJobNumber { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      miDB_TonWarningStart {InstructionName := 'TON_TIME'; LibVersion := '1.0'; ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : TON_TIME;
+      miDB_FPStartSanding {InstructionName := 'R_TRIG'; LibVersion := '1.0'; ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : R_TRIG;
+      miDB_FPEndSanding {InstructionName := 'R_TRIG'; LibVersion := '1.0'; ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : R_TRIG;
+   END_VAR
+
+   VAR_TEMP 
+      txFaultPresent : Bool;
+      txEnableVacuum : Bool;
+   END_VAR
+
+   VAR CONSTANT 
+      WaitSelectMode : UInt := 0;
+      WaitStartRecipe : UInt := 10;
+      WaitEndWarnStart : UInt := 20;
+      WaitRecipeRunning : UInt := 30;
+      RecipeRunning : UInt := 40;
+      WaitRecipeStopped : UInt := 50;
+      WaitReStartRecipe : UInt := 60;
+      WaitDoorClosed : UInt := 70;
+      WaitRecipeCancelled : UInt := 80;
+      WaitOtherRobotFinished : UInt := 90;
+      WaitBothRobotFinished : UInt := 95;
+      WaitCarRemoved : UInt := 97;
+      WaitStartPath : UInt := 100;
+      WaitPathRunning : UInt := 110;
+      PathRunning : UInt := 120;
+      WaitPathCancelled : UInt := 130;
+      PathCancelled : UInt := 135;
+      WaitPathStopped : UInt := 140;
+      PathStopped : UInt := 150;
+      ManualMode : UInt := 200;
+   END_VAR
+
+
+BEGIN
+	
+	REGION Copy Robot Input
+	  
+	  // Fault and fult number
+	  #wFaultFerRobotic := #InFromSlave.wFaultFerRobotic; // Fault number of FerRobot Head
+	  #wFaultManageRobot := #InFromSlave.wFaultManageRobot; // Fault number in the robot management of the slave PLC
+	  #wFaultRobot := #InFromSlave.wFaultRobot; // Fault number of the robot itself
+	  #wFaultOther := #InFromSlave.wFaultOther; // Fault number of the greasing system axis X and Z
+	  #wFaultVacuumValve := #InFromSlave.wFaultVacuumValve; // Fault number of Vacuum valve
+	  #wFaultFerRoboticManage := #InFromSlave.wFaultFerRoboticManage; // Fault of FerRobotic management
+	  #wWarningDiskTrayEmpty := #InFromSlave.wWarningDiskTrayEmpty; // Warning number
+	  #txFaultPresent := (#wFaultFerRobotic <> 0) OR (#wFaultManageRobot <> 0) OR (#wFaultRobot <> 0) OR (#wFaultOther <> 0) OR (#wFaultVacuumValve <> 0) OR (#wFaultFerRoboticManage <> 0); // At least 1 fault is present
+	  
+	  // Display FerRobotic information
+	  #nActualForce := #InFromSlave.nActualForce; // Actual force apply on the FerRobotic head in N
+	  #rActualPosition := UINT_TO_REAL(#InFromSlave.uiActualPosition) / 10.0; // Actual position of th FerRobotic head in mm
+	  #xContactState := (#InFromSlave.usiContact = 1); // Contact state between ferrobotic head and Carbody Shell
+	  
+	  // Robot stopped
+	  #xRobotStopped := #InFromSlave.xRecipeStopped;
+	  
+	  // Robot in Home Position
+	  #xRobotInHome := #InFromSlave.xRobotInHome;
+	  
+	  // Measure Laser State
+	  #xRangeFinderDetection := #InFromSlave.xRangeFinder;
+	  #uiRangeFinderValue := #InFromSlave.uiRangerFinder;
+	  
+	  // Greasing state
+	  #uiCounterPulse_X := #InFromSlave.uiCounterPulse_X;
+	  #uiCounterPulse_Z := #InFromSlave.uiCounterPulse_Z;
+	  #uiGreaseFault_X := #InFromSlave.uiGreaseFault_X;
+	  #uiGreaseFault_Z := #InFromSlave.uiGreaseFault_Z;
+	  #uiDistanceSandingDisk := #InFromSlave.uiDistanceSandingDisk;
+	  #uiActualRobotSpeed := #InFromSlave.uiActualRobotSpeed;
+	  #udiOdometer_X := #InFromSlave.udiOdometer_X;
+	  #udiOdometer_Z := #InFromSlave.udiOdometer_Z;
+	  
+	  // Show Popup state
+	  #xShowPopFlatnessFault := #InFromSlave.xShowPopupFlatness;
+	  #xShowPopPickupDisk := #InFromSlave.xShowPopupPickup;
+	  #xShowPopRemoveDisk := #InFromSlave.xShowPopupRemove;
+	  
+	  //Time Robot
+	  IF #xPulseSeconde AND (NOT #sxMemPulse) THEN
+	    
+	    #sxMemPulse := TRUE;
+	    #udiFaultTime := #InFromSlave.udiFaultTime;
+	    #udiRunTime := #InFromSlave.udiOperatingTime;
+	    #udiPauseTime := #InFromSlave.udiPauseTime;
+	    #udiRobotPowerOnTime := #InFromSlave.udiRobotPowerOn;
+	    #udiRobotDriveOnTime := #InFromSlave.udiRobotDriveOn;
+	    #uiDiskUsed := #InFromSlave.uiNbDisk;
+	    
+	  ELSIF (NOT #xPulseSeconde) AND #sxMemPulse THEN
+	    #sxMemPulse := FALSE;
+	  END_IF;
+	  
+	  #xMagazineEmpty := #InFromSlave.xMagazineEmpty;
+	  
+	  //Vacuum Valve State
+	  #xVacValveOpen := #InFromSlave.xVacValveOpen;
+	  #xVacValveClosed := #InFromSlave.xVacValveClosed;
+	  
+	  // Direct Input outut
+	  #bInput100 := BYTE_TO_SINT(#InFromSlave.bInput100);
+	  #bInput101 := BYTE_TO_SINT(#InFromSlave.bInput101);
+	  #bInput102 := BYTE_TO_SINT(#InFromSlave.bInput102);
+	  #bInput103 := BYTE_TO_SINT(#InFromSlave.bInput103);
+	  #bInputFast90 := BYTE_TO_SINT(#InFromSlave.bInputFast90);
+	  #bInputSafety500 := BYTE_TO_SINT(#InFromSlave.bInputSafety500);
+	  #bOutput100 := BYTE_TO_SINT(#InFromSlave.bOutput100);
+	  #bOutput101 := BYTE_TO_SINT(#InFromSlave.bOutput101);
+	  #bOutputSafety508 := BYTE_TO_SINT(#InFromSlave.bOutputSafety508);
+	  #nInput600 := #InFromSlave.nInput600;
+	  #nInput602 := #InFromSlave.nInput602;
+	  #nInput604 := #InFromSlave.nInput604;
+	  #nInput606 := #InFromSlave.nInput606;
+	  
+	  // Flatness control
+	  #stFlatnessCtrlData.xFlatnessCrtlRequestRecord := #InFromSlave.xReccordFlatness;
+	  #stFlatnessCtrlData.xFlatnessCtrlPassed := #InFromSlave.xFlatnessDiskOk;
+	  #stFlatnessCtrlData.uiStrokePositionDiskA := #InFromSlave.uiStrockPosDiskA;
+	  #stFlatnessCtrlData.uiStrokePositionDiskB := #InFromSlave.uiStrockPosDiskB;
+	  #stFlatnessCtrlData.uiStrokePositionDiskC := #InFromSlave.uiStrockPosDiskC;
+	  
+	END_REGION
+	
+	REGION Memory End Of CBS
+	  
+	  IF #InFromSlave.xRecipeEnded AND (NOT #sxMemoryEndOfCBS) THEN
+	    #sxMemoryEndOfCBS := TRUE;
+	  ELSIF (NOT #xCbsDoorAccessClosed) AND #sxMemoryEndOfCBS THEN
+	    #sxMemoryEndOfCBS := FALSE;
+	    #xRobotUsed := FALSE;
+	  END_IF;
+	    
+	END_REGION
+	REGION Mode management
+	  // Select robot mode
+	  IF #InFromSlave.xRobotInAuto AND (NOT #InFromSlave.xRobotInManu) THEN // Detection of robot operation mode
+	    #xRobotInAuto := TRUE;
+	    #xRobotInManu := FALSE;
+	    //#OutToSlave.xManualMode := FALSE;
+	  ELSE
+	    #xRobotInAuto := FALSE;
+	    #xRobotInManu := TRUE;
+	    //#OutToSlave.xManualMode := TRUE;
+	  END_IF;
+	  
+	  #OutToSlave.xManualMode := #xMaintenanceMode AND (#InFromSlave.xRobotInManu OR (NOT #InFromSlave.xRobotInAuto));
+	  
+	  // Prevent start robot if operator deseable it
+	  IF (NOT #xEnableStartRobot) AND #xStartRecipe THEN
+	    #xStartRecipe := FALSE;
+	  END_IF;
+	  
+	  // Stop all if safety not ok
+	  IF (NOT #xGlobalSafety)THEN
+	    #suiStep := #WaitSelectMode;
+	    #xStartRecipe := FALSE;
+	    #xCancelRecipe := FALSE;
+	    #xStopRecipe := FALSE;
+	  ELSE
+	    CASE #suiStep OF
+	      #WaitSelectMode:  // Mode selection
+	        IF #xAutoMode AND #xRobotInAuto THEN
+	          #suiStep := #WaitStartRecipe;
+	        ELSIF #xSemiAutoMode THEN
+	          #suiStep := #WaitStartPath;
+	        ELSIF #xMaintenanceMode AND #xRobotInManu THEN
+	          #suiStep := #ManualMode;
+	        END_IF;
+	          
+	        // ======================================================================================================  
+	        // =========================Automatic mode===============================================================    
+	      #WaitStartRecipe:
+	        IF ((#OutToSlave.usiProgNumber <> 0) AND (#OutToSlave.usiLayerType <> 0)) AND #xStartRecipe AND (NOT #sxMemoryEndOfCBS) THEN
+	          #suiStep := #WaitEndWarnStart;
+	          #xStartRecipe := FALSE;
+	        ELSIF #sxMemoryEndOfCBS THEN
+	          #xStartRecipe := FALSE;
+	          #suiStep := #WaitOtherRobotFinished;
+	        ELSIF (NOT #xAutoMode) OR (NOT #xRobotInAuto) THEN
+	          #xStartRecipe := FALSE;
+	          #suiStep := #WaitSelectMode;
+	        END_IF;
+	          
+	      #WaitEndWarnStart:
+	        IF #xVacuumRunning AND #sxWarningFinished THEN
+	          #suiStep := #WaitRecipeRunning;
+	        END_IF;
+	          
+	      #WaitRecipeRunning:
+	        IF #InFromSlave.xRecipeInProgress THEN
+	          #suiStep := #RecipeRunning;
+	        END_IF;
+	          
+	      #RecipeRunning:
+	        IF #xStopRecipe THEN
+	          #xStopRecipe := FALSE;
+	          #suiStep := #WaitRecipeStopped;
+	        ELSIF #xAccessReq THEN
+	          #suiStep := #WaitDoorClosed;
+	        ELSIF #xCancelRecipe THEN
+	          #xCancelRecipe := FALSE;
+	          #suiStep := #WaitRecipeCancelled;
+	        ELSIF #InFromSlave.xRecipeEnded THEN
+	          #suiStep := #WaitOtherRobotFinished;
+	        ELSIF #InFromSlave.xRecipeWaitStart THEN
+	          #suiStep := #WaitStartRecipe;
+	        END_IF;
+	
+	      #WaitRecipeStopped:
+	        IF #InFromSlave.xRecipeStopped THEN
+	          #suiStep := #WaitReStartRecipe;
+	        END_IF;
+	        
+	      #WaitReStartRecipe:
+	        IF ((#OutToSlave.usiProgNumber <> 0) AND (#OutToSlave.usiLayerType <> 0)) AND #xStartRecipe THEN
+	          #xStartRecipe := FALSE;
+	          #suiStep := #WaitEndWarnStart;
+	        END_IF;
+	        
+	      #WaitDoorClosed:
+	        IF #InFromSlave.xRecipeStopped AND (NOT #xAccessReq) THEN
+	          #suiStep := #WaitRecipeStopped;
+	        END_IF;
+	        
+	      #WaitRecipeCancelled: // Wait for recipe finished
+	        IF #InFromSlave.xRecipeEnded THEN
+	          #suiStep := #WaitOtherRobotFinished;
+	        END_IF;
+	        
+	      #WaitOtherRobotFinished: // Wait for other robot finish sanding or Other robot not started yet
+	        IF #InFromSlave.xEndOfCBS AND (NOT #sxMemNewCBS) THEN
+	          #sxMemNewCBS := TRUE;
+	          #OutToSlave.xAckEndOfCBS := TRUE;
+	        END_IF;
+	        IF #xStartRecipe THEN
+	          #xStartRecipe := FALSE;
+	        END_IF;
+	        IF (NOT #xOtherRobotHasStarted) OR #xOtherRobotFinished OR #xBothRobotFinished THEN
+	          #xRobotUsed := TRUE;
+	          #suiStep := #WaitBothRobotFinished;
+	        END_IF;
+	        
+	      #WaitBothRobotFinished: // Wait Both robot finished or Other robot not started yet
+	        IF (NOT #InFromSlave.xEndOfCBS) AND (NOT #xOtherRobotFinished) THEN
+	          #suiStep := #WaitCarRemoved;
+	        END_IF;
+	        
+	      #WaitCarRemoved:
+	        IF (NOT #sxMemNewCBS) THEN
+	          #suiStep := #WaitStartRecipe;
+	        END_IF;
+	        
+	        // ======================================================================================================  
+	        // =========================Semi-Automatic Mode==========================================================    
+	      #WaitStartPath:
+	        IF (#uiServicePathNum <> 0) AND #xStartPath THEN
+	          #suiStep := #WaitPathRunning;
+	        ELSIF (NOT #xSemiAutoMode) THEN
+	          #suiStep := #WaitSelectMode;
+	        END_IF;
+	        
+	      #WaitPathRunning:
+	        IF #InFromSlave.xPathInProgress THEN
+	          #suiStep := #PathRunning;
+	        END_IF;
+	        
+	      #PathRunning:
+	        IF #InFromSlave.xPathEnded THEN
+	          #suiStep := #WaitStartPath;
+	        ELSIF #xCancelPath OR (NOT #xSemiAutoMode) THEN
+	          #suiStep := #WaitPathCancelled;
+	        ELSIF #xStopPath THEN
+	          #suiStep := #WaitPathStopped;
+	        END_IF;
+	        
+	      #WaitPathCancelled:
+	        IF #InFromSlave.xPathEnded THEN
+	          #suiStep := #PathCancelled;
+	        END_IF;
+	        
+	      #PathCancelled:
+	        IF (NOT #xSemiAutoMode) THEN
+	          #suiStep := #WaitSelectMode;
+	        ELSE
+	          #suiStep := #WaitStartPath;
+	        END_IF;
+	        
+	      #WaitPathStopped:
+	        IF #InFromSlave.xPathStopped THEN
+	          #suiStep := #PathStopped;
+	        END_IF;
+	        
+	      #PathStopped:
+	        IF #xCancelPath THEN
+	          #suiStep := #WaitPathCancelled;
+	        ELSIF (NOT #xSemiAutoMode) THEN
+	          #suiStep := #WaitSelectMode;
+	        ELSIF ((#uiServicePathNum <> 0) AND (#uiServicePathNum = #InFromSlave.uiNumServicePath)) AND #xStartPath THEN
+	          #suiStep := #WaitPathRunning;
+	        END_IF;
+	          
+	        // ======================================================================================================  
+	        // =========================Manual mode==================================================================    
+	      #ManualMode:
+	        IF (NOT #xMaintenanceMode) THEN
+	          #suiStep := #WaitSelectMode;
+	        END_IF;
+	        
+	      ELSE  // Statement section ELSE
+	          ;
+	    END_CASE;
+	      
+	  END_IF;
+	    
+	END_REGION
+	
+	REGION Manual Mode Management
+	  IF (#suiStep = #ManualMode) THEN
+	    #OutToSlave.ManualSandingPaperParam := #xParamManu; // FerRobotic parameter for manual mode
+	    #OutToSlave.xCmdManuEnableRotate := #xCmdManuEnableRotate; // Enable sanding rotation
+	    #OutToSlave.xCmdManuLockEccentric1 := #xCmdManuLockEccentric1; // Lock Eccentric 1
+	    #OutToSlave.xCmdManuLockEccentric2 := #xCmdManuLockEccentric2; // Lock Eccentric 2
+	    #OutToSlave.xCmdManuLockEccentric3 := #xCmdManuLockEccentric3; // Lock Eccentric 3
+	    #OutToSlave.xCmdManuLockGimball := #xCmdManuLockGimball; // Lock Gimball
+	    #OutToSlave.xCmdManuOpenVacValve := #xCmdManuOpenVacValve;
+	    #OutToSlave.xCmdManuCloseVaValve := #xCmdManuCloseVaValve;
+	    #OutToSlave.xCmdManuRemoveConfig := #xCmdManuRemoveConfig;
+	    #OutToSlave.xCmdManuPickupConfig := #xCmdManuPickupConfig;
+	    #OutToSlave.xCmdManuFlatnessConfig := #xCmdManuFlatnessConfig;
+	  END_IF;
+	END_REGION
+	
+	REGION Automatic Mode Management
+	  
+	  REGION Job Data Management
+	    // Define the number max of reccord
+	    #suiMaxJobNumber := DINT_TO_UINT(UPPER_BOUND(ARR := #aListJobData, DIM := 1));
+	    // Select Job Data to send to the robot
+	    IF (#InFromSlave.uiJobNumber > 0) AND (#InFromSlave.uiJobNumber <= #suiMaxJobNumber) THEN
+	      #OutToSlave.JobData := #aListJobData[#InFromSlave.uiJobNumber];
+	      #uiJobDataNumber := #InFromSlave.uiJobNumber;
+	      #uiSetSpeed := #OutToSlave.JobData.SetSpeed;
+	      #uiRobotSpeed := #OutToSlave.JobData.SetRobotSpeed;
+	      #uiPaperChangeDistance := #OutToSlave.JobData.WornPaperDistance;
+	      #OutToSlave.uiJobNumber := #InFromSlave.uiJobNumber;
+	      #OutToSlave.xJobFound := TRUE;
+	    ELSIF (#InFromSlave.uiJobNumber = 0) THEN
+	      #OutToSlave.JobData := #aListJobData[0];
+	      #uiJobDataNumber := #InFromSlave.uiJobNumber;
+	      #uiSetSpeed := #OutToSlave.JobData.SetSpeed;
+	      #uiRobotSpeed := #OutToSlave.JobData.SetRobotSpeed;
+	      #OutToSlave.uiJobNumber := #InFromSlave.uiJobNumber;
+	      #OutToSlave.xJobFound := FALSE;
+	    ELSE
+	      #OutToSlave.xJobFound := FALSE;
+	    END_IF;
+	  END_REGION
+	  
+	  REGION Warning Alarm
+	    #sxEnableWarning := ((#suiStep = #WaitEndWarnStart) AND #xVacuumRunning AND #xVaccumPumpRunning);
+	    #miDB_TonWarningStart(IN := #sxEnableWarning,
+	                          PT := T#5S);
+	    #sxWarningFinished := #miDB_TonWarningStart.Q;
+	    #xWarningStart := #sxEnableWarning;
+	  END_REGION
+	  
+	  #txEnableVacuum := (#suiStep = #WaitEndWarnStart) OR (#suiStep = #WaitRecipeRunning) OR (#suiStep = #RecipeRunning) OR (#suiStep = #WaitRecipeStopped) OR (#suiStep = #WaitDoorClosed) OR (#suiStep = #WaitRecipeCancelled);
+	  #xReqVacuum := #txEnableVacuum;
+	  
+	  #xRecipeInProgress := (#suiStep = #RecipeRunning);
+	  #xProductionRunning := (#suiStep = #WaitRecipeRunning) OR (#suiStep = #RecipeRunning) OR (#suiStep = #WaitRecipeStopped);
+	  
+	  // Reset commande Start, Stop or Cancel
+	  IF (NOT #xRobotInAuto) OR (NOT #xAutoMode) THEN
+	    #xStopRecipe := FALSE;
+	    #xCancelRecipe := FALSE;
+	    #xStartRecipe := FALSE;
+	  ELSIF (#suiStep <> #RecipeRunning) THEN
+	    #xStopRecipe := FALSE;
+	  ELSIF (#suiStep <> #RecipeRunning)THEN
+	    #xCancelRecipe := FALSE;
+	  ELSIF ((#suiStep <> #WaitStartRecipe) AND (#suiStep <> #WaitReStartRecipe)) THEN
+	    #xStartRecipe := FALSE;
+	  END_IF;
+	  
+	  IF (#suiStep >= #WaitStartRecipe) AND (#suiStep <= #WaitOtherRobotFinished) THEN
+	    #OutToSlave.usiProgNumber := #usiTrajNumber;
+	    #OutToSlave.usiLayerType := #usiSandingType;
+	  ELSE
+	    #OutToSlave.usiProgNumber := #usiTrajNumber;
+	    #OutToSlave.usiLayerType := #usiSandingType;
+	  END_IF;
+	  
+	  // Communication inter robot
+	  IF (#suiStep = #RecipeRunning) THEN
+	    #xRobotHasStarted := TRUE;
+	  ELSIF (#suiStep = #WaitOtherRobotFinished) THEN
+	    #xRobotHasStarted := FALSE;
+	  END_IF;
+	  
+	  #xWaitOtherRobotFinished := (#suiStep = #WaitOtherRobotFinished);
+	  #xWaitBothRobotFinished := (#suiStep = #WaitBothRobotFinished);
+	  
+	  // Information Start sanding en End sanding
+	  // for TipTrack and Production reccord
+	  #miDB_FPStartSanding(CLK:=((#suiStep = #WaitEndWarnStart) AND #sxMemNewCBS));
+	  IF #miDB_FPStartSanding.Q THEN
+	    #xStartSanding := TRUE;
+	  END_IF;
+	  
+	  #miDB_FPEndSanding(CLK:=(#suiStep = #WaitCarRemoved));
+	  IF #miDB_FPEndSanding.Q THEN
+	    #xEndSanding := TRUE;
+	  END_IF;
+	  
+	END_REGION
+	
+	REGION Semi-Automatic mode management
+	  
+	  IF (#suiStep = #WaitStartPath) OR (#suiStep = #PathStopped) THEN
+	    #OutToSlave.uiNumServicePath := #uiServicePathNum;
+	  END_IF;
+	  
+	  #OutToSlave.xCancelPath := (#suiStep = #WaitPathCancelled);
+	  #OutToSlave.xStartPath := (#suiStep = #WaitPathRunning);
+	  #OutToSlave.xStopPath := (#suiStep = #WaitPathStopped);
+	  
+	  #xPathStopped := (#suiStep = #PathStopped);
+	  #xPathInProgress := (#suiStep = #PathStopped);
+	  #xPathCancelled := (#suiStep = #PathCancelled);
+	  
+	  IF (#suiStep <> #WaitStartPath) AND (#suiStep <> #PathStopped) THEN
+	    #xStartPath := false;
+	  ELSIF (#suiStep <> #PathRunning) THEN
+	    #xStopPath := false;
+	  ELSIF (#suiStep <> #PathRunning) AND (#suiStep <> #PathStopped) THEN
+	    #xCancelPath := FALSE;
+	  END_IF;
+	  
+	END_REGION
+	
+	REGION All Mode Management
+	  
+	  IF #xRobotInManu OR (NOT #xRobotInAuto) THEN
+	    #uiRobotStatus := 0;  // Message robot In Manuel Mode
+	  ELSIF #xRobotInAuto THEN
+	    CASE #suiStep OF
+	      #WaitEndWarnStart, #WaitRecipeRunning, #RecipeRunning:
+	        #uiRobotStatus := 4; // Message robot Running
+	        
+	      #WaitReStartRecipe:
+	        #uiRobotStatus := 3; // Message robot Paused
+	        
+	      #WaitOtherRobotFinished, #WaitBothRobotFinished, #WaitCarRemoved:
+	        #uiRobotStatus := 2; // Message robot Stopped
+	        
+	      ELSE
+	        #uiRobotStatus := 1; // Message robot In Automatic Mode
+	        
+	    END_CASE;
+	  END_IF;
+	  
+	  #uiDistanceBeforeGreasingX := #InFromSlave.uiKmBeforeGresingX - #InFromSlave.uiCurrOdometerX;
+	  #uiDistanceBeforeGreasingZ := #InFromSlave.uiKmBeforeGresingZ - #InFromSlave.uiCurrOdometerZ;
+	  
+	END_REGION
+	
+	REGION Copy robot output
+	  
+	  #OutToSlave.xReset := (#xReset AND (#InFromSlave.xResetReq OR (NOT #xGlobalSafety) OR #txFaultPresent)); // Send reset commande to the slave PLC
+	  #OutToSlave.xGlobalSafety := #xGlobalSafety; // Send global safety state to the slave PLC
+	  #OutToSlave.xAutoMode := #xAutoMode; // Automatic mode enable
+	  #OutToSlave.xSemiAutoMode := #xSemiAutoMode; // Seim-Automatic mode enable
+	  #OutToSlave.xMaintMode := #xMaintenanceMode; // Maintenance mode enable
+	  #OutToSlave.xStartRobot := #xMaintStartProg; // Maintenance start program
+	  #OutToSlave.xStartRobotMain := #xMaintStartMain; // Maintenance start main programm
+	  #OutToSlave.xAccessReq := #xAccessReq; // Access in the the cell requested
+	  #OutToSlave.xLightTest := #xLightTest; // Commande light test
+	  #OutToSlave.xReqChangePaper := #xReqChangePaper; // Operator request changing disk
+	  
+	  #OutToSlave.xStartRecipe := (#suiStep = #WaitRecipeRunning);
+	  #OutToSlave.xCancelRecipe := (#suiStep = #WaitRecipeCancelled);
+	  #OutToSlave.xStopRecipe := (#suiStep = #WaitRecipeStopped) OR (#suiStep = #WaitDoorClosed);
+	  #OutToSlave.xDryRun := #xDryRun;
+	  #OutToSlave.xVacuumPumpRunning := #xVaccumPumpRunning;
+	  
+	  #OutToSlave.xStartUpWarning := #xWarningStart;
+	  
+	  #OutToSlave.xResetCounter := (#sxMemNewCBS AND #suiStep = #WaitEndWarnStart);
+	  
+	  IF #sxMemNewCBS AND #InFromSlave.xAckNewCBS THEN
+	    #sxMemNewCBS := FALSE;
+	  END_IF;
+	  #OutToSlave.xNewCBS := #sxMemNewCBS;
+	  
+	  IF #OutToSlave.xAckEndOfCBS AND (NOT #InFromSlave.xEndOfCBS) THEN
+	    #OutToSlave.xAckEndOfCBS := FALSE;
+	  END_IF;
+	  
+	  
+	  IF #xValideFault AND #InFromSlave.xShowPopupFlatness THEN
+	    #OutToSlave.xValideFault := TRUE;
+	  ELSIF #OutToSlave.xValideFault AND (NOT #InFromSlave.xShowPopupFlatness) THEN
+	    #OutToSlave.xValideFault := FALSE;
+	  END_IF;
+	  
+	  IF #xValideOperation AND (#InFromSlave.xShowPopupPickup OR #InFromSlave.xShowPopupRemove) THEN
+	    #OutToSlave.xValideOperation := TRUE;
+	  ELSIF #OutToSlave.xValideOperation AND (NOT #InFromSlave.xShowPopupPickup) AND (NOT #InFromSlave.xShowPopupRemove) THEN
+	    #OutToSlave.xValideOperation := FALSE;
+	  END_IF;
+	  
+	  // Flatness control
+	  #OutToSlave.xAckReccordFlatness := #stFlatnessCtrlData.xFlatnessCtrlRecorded;
+	  
+	  // Force greasing axis
+	  #OutToSlave.xForceLubricationX := #xForceLubricationX;
+	  #OutToSlave.xForceLubricationZ := #xForceLubricationZ;
+	  
+	  // Reset grafcet of Robot communication
+	  #OutToSlave.xResetGR7 := #xResetGrafcet;
+	END_REGION
+END_FUNCTION_BLOCK
+

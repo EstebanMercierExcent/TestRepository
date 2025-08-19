@@ -1,0 +1,335 @@
+﻿FUNCTION_BLOCK "FB70_ProductionRecord"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      usiCurrentLayerType { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : USInt;
+      uiCbsNumber { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      uiCurrentJobNumberRobot1 { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      uiCurrentJobNumberRobot2 { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      uiPaperUsedRobot1 { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      uiPaperUsedRobot2 { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      WorkRecipe { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : "stWorkRecipe";
+   END_VAR
+
+   VAR_OUTPUT 
+      uiRecordMax { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      uiRecordMin { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      uiNbrDisplyedLine { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;   // Number of displayed lime of production
+      uiFirstRecordDisplayed { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;   // First record displayed
+      uiLastRecordDisplayed { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;   // Last record displayed
+      aDisplayProdData { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Array[0..9] of "stProductionRecord";
+   END_VAR
+
+   VAR_IN_OUT 
+      xNewRecord { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      xProductionRecord { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      xLeftRobotUsed { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      xRightRobotUsed { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      xResetCurrentRecord { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      xEraseAllData { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      xDisplayNextRecord { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      xDisplayPrevRecord { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      uiNumberOfRecords { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      aProdData : Array[*] of "stProductionRecord";
+   END_VAR
+
+   VAR 
+      sxNewRecord { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      sdiMaxRecord { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : DInt;
+      snCounter { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Int;
+      suiMemDisplayCurentReccord { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      suiMaxJobNumber { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      suiMemCurrentJobNumberR1 { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      suiMemCurrentJobNumberR2 { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      suiDisplayCurentRecord { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+   END_VAR
+
+   VAR_TEMP 
+      txRequestAction : Bool;
+      suiCount : UInt;
+      suiRecord : UInt;
+      tuiPaperUsedRobot1 : UInt;
+      tuiPaperUsedRobot2 : UInt;
+   END_VAR
+
+
+BEGIN
+	REGION Control Job Number Used
+	  // Control if record data is in pregress and Job Data number change
+	  IF #sxNewRecord AND (#uiCurrentJobNumberRobot1 <> #suiMemCurrentJobNumberR1) THEN
+	    // Controo if job data number is in range
+	    IF ((#uiCurrentJobNumberRobot1 > 0) AND (#uiCurrentJobNumberRobot1 <= 6)) THEN
+	      #suiMemCurrentJobNumberR1 := #uiCurrentJobNumberRobot1;
+	      CASE #uiCurrentJobNumberRobot1 OF
+	        1:
+	          #aProdData[1].Rob1Job1Used := TRUE;
+	          #aProdData[1].Rob1Job1DistChangePaper := #WorkRecipe.RecipeLayerType.JobTableLeft[1].WornPaperDistance;
+	          #aProdData[1].Rob1Job1ForceTarget := #WorkRecipe.RecipeLayerType.JobTableLeft[1].SetForceTarget;
+	          #aProdData[1].Rob1Job1RobotSpeed := #WorkRecipe.RecipeLayerType.JobTableLeft[1].SetRobotSpeed;
+	          #aProdData[1].Rob1Job1SandingSpeed := #WorkRecipe.RecipeLayerType.JobTableLeft[1].SetSpeed;
+	        2:
+	          #aProdData[1].Rob1Job2Used := TRUE;
+	          #aProdData[1].Rob1Job2DistChangePaper := #WorkRecipe.RecipeLayerType.JobTableLeft[2].WornPaperDistance;
+	          #aProdData[1].Rob1Job2ForceTarget := #WorkRecipe.RecipeLayerType.JobTableLeft[2].SetForceTarget;
+	          #aProdData[1].Rob1Job2RobotSpeed := #WorkRecipe.RecipeLayerType.JobTableLeft[2].SetRobotSpeed;
+	          #aProdData[1].Rob1Job2SandingSpeed := #WorkRecipe.RecipeLayerType.JobTableLeft[2].SetSpeed;
+	        3:
+	          #aProdData[1].Rob1Job3Used := TRUE;
+	          #aProdData[1].Rob1Job3DistChangePaper := #WorkRecipe.RecipeLayerType.JobTableLeft[3].WornPaperDistance;
+	          #aProdData[1].Rob1Job3ForceTarget := #WorkRecipe.RecipeLayerType.JobTableLeft[3].SetForceTarget;
+	          #aProdData[1].Rob1Job3RobotSpeed := #WorkRecipe.RecipeLayerType.JobTableLeft[3].SetRobotSpeed;
+	          #aProdData[1].Rob1Job3SandingSpeed := #WorkRecipe.RecipeLayerType.JobTableLeft[3].SetSpeed;
+	        4:
+	          #aProdData[1].Rob1Job4Used := TRUE;
+	          #aProdData[1].Rob1Job4DistChangePaper := #WorkRecipe.RecipeLayerType.JobTableLeft[4].WornPaperDistance;
+	          #aProdData[1].Rob1Job4ForceTarget := #WorkRecipe.RecipeLayerType.JobTableLeft[4].SetForceTarget;
+	          #aProdData[1].Rob1Job4RobotSpeed := #WorkRecipe.RecipeLayerType.JobTableLeft[4].SetRobotSpeed;
+	          #aProdData[1].Rob1Job4SandingSpeed := #WorkRecipe.RecipeLayerType.JobTableLeft[4].SetSpeed;
+	        5:
+	          #aProdData[1].Rob1Job5Used := TRUE;
+	          #aProdData[1].Rob1Job5DistChangePaper := #WorkRecipe.RecipeLayerType.JobTableLeft[5].WornPaperDistance;
+	          #aProdData[1].Rob1Job5ForceTarget := #WorkRecipe.RecipeLayerType.JobTableLeft[5].SetForceTarget;
+	          #aProdData[1].Rob1Job5RobotSpeed := #WorkRecipe.RecipeLayerType.JobTableLeft[5].SetRobotSpeed;
+	          #aProdData[1].Rob1Job5SandingSpeed := #WorkRecipe.RecipeLayerType.JobTableLeft[5].SetSpeed;
+	        6:
+	          #aProdData[1].Rob1Job6Used := TRUE;
+	          #aProdData[1].Rob1Job6DistChangePaper := #WorkRecipe.RecipeLayerType.JobTableLeft[6].WornPaperDistance;
+	          #aProdData[1].Rob1Job6ForceTarget := #WorkRecipe.RecipeLayerType.JobTableLeft[6].SetForceTarget;
+	          #aProdData[1].Rob1Job6RobotSpeed := #WorkRecipe.RecipeLayerType.JobTableLeft[6].SetRobotSpeed;
+	          #aProdData[1].Rob1Job6SandingSpeed := #WorkRecipe.RecipeLayerType.JobTableLeft[6].SetSpeed;
+	      END_CASE;
+	      
+	    ELSE
+	      #suiMemCurrentJobNumberR1 := #uiCurrentJobNumberRobot1;
+	    END_IF;
+	  END_IF;
+	  
+	  // Control if record data is in pregress and Job Data number change
+	  IF #sxNewRecord AND (#uiCurrentJobNumberRobot2 <> #suiMemCurrentJobNumberR2) THEN
+	    // Controo if job data number is in range
+	    IF ((#uiCurrentJobNumberRobot2 > 0) AND (#uiCurrentJobNumberRobot2 <= 6)) THEN
+	      #suiMemCurrentJobNumberR2 := #uiCurrentJobNumberRobot2;
+	      CASE #uiCurrentJobNumberRobot2 OF
+	        1:
+	          #aProdData[1].Rob2Job1Used := TRUE;
+	          #aProdData[1].Rob2Job1DistChangePaper := #WorkRecipe.RecipeLayerType.JobTableRight[1].WornPaperDistance;
+	          #aProdData[1].Rob2Job1ForceTarget := #WorkRecipe.RecipeLayerType.JobTableRight[1].SetForceTarget;
+	          #aProdData[1].Rob2Job1RobotSpeed := #WorkRecipe.RecipeLayerType.JobTableRight[1].SetRobotSpeed;
+	          #aProdData[1].Rob2Job1SandingSpeed := #WorkRecipe.RecipeLayerType.JobTableRight[1].SetSpeed;
+	        2:
+	          #aProdData[1].Rob2Job2Used := TRUE;
+	          #aProdData[1].Rob2Job2DistChangePaper := #WorkRecipe.RecipeLayerType.JobTableRight[2].WornPaperDistance;
+	          #aProdData[1].Rob2Job2ForceTarget := #WorkRecipe.RecipeLayerType.JobTableRight[2].SetForceTarget;
+	          #aProdData[1].Rob2Job2RobotSpeed := #WorkRecipe.RecipeLayerType.JobTableRight[2].SetRobotSpeed;
+	          #aProdData[1].Rob2Job2SandingSpeed := #WorkRecipe.RecipeLayerType.JobTableRight[2].SetSpeed;
+	        3:
+	          #aProdData[1].Rob2Job3Used := TRUE;
+	          #aProdData[1].Rob2Job3DistChangePaper := #WorkRecipe.RecipeLayerType.JobTableRight[3].WornPaperDistance;
+	          #aProdData[1].Rob2Job3ForceTarget := #WorkRecipe.RecipeLayerType.JobTableRight[3].SetForceTarget;
+	          #aProdData[1].Rob2Job3RobotSpeed := #WorkRecipe.RecipeLayerType.JobTableRight[3].SetRobotSpeed;
+	          #aProdData[1].Rob2Job3SandingSpeed := #WorkRecipe.RecipeLayerType.JobTableRight[3].SetSpeed;
+	        4:
+	          #aProdData[1].Rob2Job4Used := TRUE;
+	          #aProdData[1].Rob2Job4DistChangePaper := #WorkRecipe.RecipeLayerType.JobTableRight[4].WornPaperDistance;
+	          #aProdData[1].Rob2Job4ForceTarget := #WorkRecipe.RecipeLayerType.JobTableRight[4].SetForceTarget;
+	          #aProdData[1].Rob2Job4RobotSpeed := #WorkRecipe.RecipeLayerType.JobTableRight[4].SetRobotSpeed;
+	          #aProdData[1].Rob2Job4SandingSpeed := #WorkRecipe.RecipeLayerType.JobTableRight[4].SetSpeed;
+	        5:
+	          #aProdData[1].Rob2Job5Used := TRUE;
+	          #aProdData[1].Rob2Job5DistChangePaper := #WorkRecipe.RecipeLayerType.JobTableRight[5].WornPaperDistance;
+	          #aProdData[1].Rob2Job5ForceTarget := #WorkRecipe.RecipeLayerType.JobTableRight[5].SetForceTarget;
+	          #aProdData[1].Rob2Job5RobotSpeed := #WorkRecipe.RecipeLayerType.JobTableRight[5].SetRobotSpeed;
+	          #aProdData[1].Rob2Job5SandingSpeed := #WorkRecipe.RecipeLayerType.JobTableRight[5].SetSpeed;
+	        6:
+	          #aProdData[1].Rob2Job6Used := TRUE;
+	          #aProdData[1].Rob2Job6DistChangePaper := #WorkRecipe.RecipeLayerType.JobTableRight[6].WornPaperDistance;
+	          #aProdData[1].Rob2Job6ForceTarget := #WorkRecipe.RecipeLayerType.JobTableRight[6].SetForceTarget;
+	          #aProdData[1].Rob2Job6RobotSpeed := #WorkRecipe.RecipeLayerType.JobTableRight[6].SetRobotSpeed;
+	          #aProdData[1].Rob2Job6SandingSpeed := #WorkRecipe.RecipeLayerType.JobTableRight[6].SetSpeed;
+	      END_CASE;
+	    ELSE
+	      #suiMemCurrentJobNumberR2 := #uiCurrentJobNumberRobot2;
+	    END_IF;
+	  END_IF;
+	END_REGION
+	
+	REGION Exit FB
+	  // Exit function bloc if no action requested
+	  IF #suiDisplayCurentRecord = 0 THEN
+	    #suiDisplayCurentRecord := 1;
+	  END_IF;
+	  
+	  #txRequestAction := #xNewRecord OR #xProductionRecord OR #xResetCurrentRecord OR #xEraseAllData OR #xDisplayNextRecord OR #xDisplayPrevRecord;
+	  IF #suiDisplayCurentRecord <> #suiMemDisplayCurentReccord THEN
+	    #suiMemDisplayCurentReccord := #suiDisplayCurentRecord;
+	  ELSIF (NOT #txRequestAction) THEN
+	    RETURN;
+	  END_IF;
+	END_REGION
+	
+	REGION Record Min and Max
+	  #sdiMaxRecord := UPPER_BOUND(ARR := #aProdData, DIM := 1);
+	  IF #uiNumberOfRecords < 1 THEN
+	    #uiRecordMax := 1;
+	  ELSE
+	    #uiRecordMax := #uiNumberOfRecords;
+	  END_IF;
+	  #uiRecordMin := 1;
+	END_REGION
+	
+	REGION New Record
+	  IF #xNewRecord AND (NOT #sxNewRecord) THEN // Request new record and no new record in progress
+	    IF #uiNumberOfRecords = 0 THEN // First record
+	      // First record in the table
+	      #uiNumberOfRecords := 1;
+	      // Erase all data
+	      #aProdData[1] := #aProdData[0];
+	      "FC71_PrepareNewRecord"(usiCurrentLayerType:=#usiCurrentLayerType,
+	                              uiCbsNumber:=#uiCbsNumber,
+	                              WorkRecipe:=#WorkRecipe,
+	                              ProdData:=#aProdData[1]);
+	    ELSIF #uiNumberOfRecords < #sdiMaxRecord THEN // less then max record
+	      // Increase the number of record
+	      #uiNumberOfRecords += 1;
+	      // Offset all records
+	      FOR #snCounter := UINT_TO_INT(#uiNumberOfRecords) TO 2 BY -1 DO
+	        #aProdData[#snCounter] := #aProdData[#snCounter - 1];
+	      END_FOR;
+	      // Erase all data
+	      #aProdData[1] := #aProdData[0];
+	      "FC71_PrepareNewRecord"(usiCurrentLayerType := #usiCurrentLayerType,
+	                              uiCbsNumber := #uiCbsNumber,
+	                              WorkRecipe := #WorkRecipe,
+	                              ProdData := #aProdData[1]);
+	    ELSIF #uiNumberOfRecords = #sdiMaxRecord THEN // Max record
+	      // Delete last record
+	      #aProdData[#uiNumberOfRecords] := #aProdData[0];
+	      // Offset all records
+	      FOR #snCounter := UINT_TO_INT(#uiNumberOfRecords) TO 2 BY -1 DO
+	        #aProdData[#snCounter] := #aProdData[#snCounter - 1];
+	      END_FOR;
+	      // Erase all data
+	      #aProdData[1] := #aProdData[0];
+	      "FC71_PrepareNewRecord"(usiCurrentLayerType := #usiCurrentLayerType,
+	                              uiCbsNumber := #uiCbsNumber,
+	                              WorkRecipe := #WorkRecipe,
+	                              ProdData := #aProdData[1]);
+	    END_IF;
+	    #xNewRecord := FALSE;
+	    #sxNewRecord := TRUE;
+	    
+	  ELSIF #xNewRecord AND #sxNewRecord THEN // Request new record but new record already in progress
+	    #xNewRecord := FALSE;
+	  END_IF;
+	END_REGION
+	
+	REGION Production Record
+	  IF #xProductionRecord AND #sxNewRecord THEN // Request record production and new record already in progress
+	    // Count paper used if robot 1 used
+	    IF #xLeftRobotUsed THEN
+	      #tuiPaperUsedRobot1 := #uiPaperUsedRobot1;
+	      #xLeftRobotUsed := FALSE;
+	    ELSE
+	      #tuiPaperUsedRobot1 := 0;
+	    END_IF;
+	    // Count paper used if robot 2 used
+	    IF #xRightRobotUsed THEN
+	      #tuiPaperUsedRobot2 := #uiPaperUsedRobot2;
+	      #xRightRobotUsed := FALSE;
+	    ELSE
+	      #tuiPaperUsedRobot2 := 0;
+	    END_IF;
+	    // General record
+	    "FC72_Record"(uiPaperUsedRobot1:=#tuiPaperUsedRobot1,
+	                  uiPaperUsedRobot2:=#tuiPaperUsedRobot2,
+	                  ProdData:=#aProdData[1]);
+	    
+	    #xProductionRecord := FALSE;
+	    #sxNewRecord := FALSE;
+	    
+	  ELSIF #xProductionRecord AND (NOT #sxNewRecord) THEN // Request record production but no new record already in progress
+	    #xProductionRecord := FALSE;
+	    
+	  END_IF;
+	END_REGION
+	
+	REGION Erase All
+	  IF #xEraseAllData THEN // Request reset all record in the table
+	    // Erase all the data record
+	    FOR #snCounter := 1 TO UINT_TO_INT(#uiNumberOfRecords) DO
+	      #aProdData[#snCounter] := #aProdData[0];
+	    END_FOR;
+	    // Reset the number of record in table
+	    #suiDisplayCurentRecord := 1;
+	    #uiNumberOfRecords := 0;
+	    #sxNewRecord := FALSE;
+	    #xEraseAllData := FALSE;
+	  END_IF;
+	END_REGION
+	
+	REGION Erase Record
+	  IF #xResetCurrentRecord AND #sxNewRecord THEN // Request reset current record and new record already in progress
+	    // Offset all current record down
+	    FOR #snCounter := 1 TO (UINT_TO_INT(#uiNumberOfRecords) - 1) DO
+	      #aProdData[#snCounter] := #aProdData[#snCounter + 1];
+	    END_FOR;
+	    // Erase the last record in the table
+	    #aProdData[#uiNumberOfRecords] := #aProdData[0];
+	    // Decrease the number of records in the table
+	    #uiNumberOfRecords -= 1;
+	    #sxNewRecord := FALSE;
+	    #xResetCurrentRecord := FALSE;
+	    
+	  ELSIF #xResetCurrentRecord AND (NOT #sxNewRecord) THEN // Request reset current record but no new record already in progress
+	    #xResetCurrentRecord := FALSE;
+	  END_IF;
+	END_REGION
+	
+	REGION change curent record displayed
+	  // Force display current record to 1
+	  IF #suiDisplayCurentRecord = 0 THEN
+	    #suiDisplayCurentRecord := 1;
+	  END_IF;
+	  
+	  // Increase curent displayed record number
+	  IF #xDisplayNextRecord AND (#uiRecordMax >= (#suiDisplayCurentRecord + 10)) THEN
+	    #suiDisplayCurentRecord += 10;
+	    #xDisplayNextRecord := FALSE;
+	  ELSE
+	    #xDisplayNextRecord := FALSE;
+	  END_IF;
+	  
+	  // Decrease current displayed record number
+	  IF #xDisplayPrevRecord AND (#suiDisplayCurentRecord > #uiRecordMin) THEN
+	    #suiDisplayCurentRecord -= 10;
+	    #xDisplayPrevRecord := FALSE;
+	  ELSE
+	    #xDisplayPrevRecord := FALSE;
+	  END_IF;
+	  
+	  
+	END_REGION
+	
+	REGION Refresh displayed record
+	  #uiNbrDisplyedLine := 0;
+	  #uiFirstRecordDisplayed := 0;
+	  #uiLastRecordDisplayed := 0;
+	  IF (#suiDisplayCurentRecord <= #uiRecordMax) AND (#uiNumberOfRecords <> 0) THEN
+	    #uiNbrDisplyedLine += 1;
+	    #uiFirstRecordDisplayed := #suiDisplayCurentRecord;
+	    #uiLastRecordDisplayed := #suiDisplayCurentRecord;
+	    #aDisplayProdData[0] := #aProdData[#suiDisplayCurentRecord];
+	  END_IF;
+	  FOR #suiCount := 1 TO 9 DO
+	    #suiRecord := (#suiDisplayCurentRecord + #suiCount);
+	    IF #suiRecord <= #uiRecordMax THEN
+	      #uiNbrDisplyedLine += 1;
+	      #uiLastRecordDisplayed := #suiRecord;
+	      #aDisplayProdData[#suiCount] := #aProdData[#suiRecord];
+	    END_IF;
+	  END_FOR;
+	  #suiMemDisplayCurentReccord := #suiDisplayCurentRecord;
+	  
+	END_REGION
+END_FUNCTION_BLOCK
+

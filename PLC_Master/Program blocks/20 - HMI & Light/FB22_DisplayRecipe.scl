@@ -1,0 +1,14 @@
+﻿FUNCTION_BLOCK "FB22_DisplayRecipe"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      xRecipeOpeInProgress { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Recipe operantion in progress
+      xSaveRecipe { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Save current recipe into the data base
+      xNextRecipe { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Load next recipe in the data base
+      xPrevRecipe { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Load previus recipe in the data base
+   END_VAR
+
+
+BEGIN
+END_FUNCTION_BLOCK
+

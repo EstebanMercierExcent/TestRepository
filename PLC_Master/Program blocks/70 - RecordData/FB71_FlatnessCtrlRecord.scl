@@ -1,0 +1,136 @@
+﻿FUNCTION_BLOCK "FB71_FlatnessCtrlRecord"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_OUTPUT 
+      uiRecordMax { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      uiRecordMin { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      DisplayFlatRecData { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : "stFlatnessCtrlRecord";
+   END_VAR
+
+   VAR_IN_OUT 
+      xEraseAllData { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      xDisplayNextRecord { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      xDisplayPrevRecord { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      uiDisplayCurentRecord { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      uiNumberOfRecords { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      stFlatnessdata : "stFlatnessData";
+      aFlatnessData : Array[*] of "stFlatnessCtrlRecord";
+   END_VAR
+
+   VAR 
+      sdiMaxRecord { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : DInt;
+      siCounter { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Int;
+      suiMemDisplayCurentReccord { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+   END_VAR
+
+   VAR_TEMP 
+      tiReturnValue : Int;
+      tdtlActualDateTime {InstructionName := 'DTL'; LibVersion := '1.0'} : DTL;
+   END_VAR
+
+
+BEGIN
+	// Exit function bloc if no action requested
+	IF #uiDisplayCurentRecord = 0 THEN
+	  #uiDisplayCurentRecord := 1;
+	END_IF;
+	
+	IF (NOT #stFlatnessdata.xFlatnessCrtlRequestRecord) AND #stFlatnessdata.xFlatnessCtrlRecorded THEN
+	  #stFlatnessdata.xFlatnessCtrlRecorded := FALSE;
+	  RETURN;
+	ELSIF #uiDisplayCurentRecord <> #suiMemDisplayCurentReccord THEN
+	  #suiMemDisplayCurentReccord := #uiDisplayCurentRecord;
+	ELSIF ((NOT #stFlatnessdata.xFlatnessCrtlRequestRecord) OR #stFlatnessdata.xFlatnessCtrlRecorded) AND (NOT #xEraseAllData) AND (NOT #xDisplayNextRecord) AND (NOT #xDisplayPrevRecord) THEN
+	  RETURN;
+	END_IF;
+	
+	REGION Record Min and Max
+	  #sdiMaxRecord := UPPER_BOUND(ARR := #aFlatnessData, DIM := 1);
+	  IF #uiNumberOfRecords < 1 THEN
+	    #uiRecordMax := 1;
+	  ELSE
+	    #uiRecordMax := #uiNumberOfRecords;
+	  END_IF;
+	  #uiRecordMin := 1;
+	END_REGION
+	
+	
+	
+	REGION Erase All Data
+	  IF #xEraseAllData THEN
+	    // Erase all the data record
+	    FOR #siCounter := 1 TO UINT_TO_INT(#uiNumberOfRecords) DO
+	      #aFlatnessData[#siCounter] := #aFlatnessData[0];
+	    END_FOR;
+	    // Reset the number of record in table
+	    #uiDisplayCurentRecord := 1;
+	    #uiNumberOfRecords := 0;
+	    #xEraseAllData := FALSE;
+	  END_IF;
+	END_REGION
+	
+	REGION Flatness Record data
+	  IF #stFlatnessdata.xFlatnessCrtlRequestRecord THEN
+	    
+	    IF #uiNumberOfRecords = 0 THEN // First record
+	      // First record in the table
+	      #uiNumberOfRecords := 1;
+	    ELSIF #uiNumberOfRecords < #sdiMaxRecord THEN // less then max record
+	      // Increase the number of record
+	      #uiNumberOfRecords += 1;
+	      // Offset all records
+	      FOR #siCounter := UINT_TO_INT(#uiNumberOfRecords) TO 2 BY -1 DO
+	        #aFlatnessData[#siCounter] := #aFlatnessData[#siCounter - 1];
+	      END_FOR;
+	    ELSIF #uiNumberOfRecords = #sdiMaxRecord THEN // Max record
+	      // Delete last record
+	      #aFlatnessData[#uiNumberOfRecords] := #aFlatnessData[0];
+	      // Offset all records
+	      FOR #siCounter := UINT_TO_INT(#uiNumberOfRecords) TO 2 BY -1 DO
+	        #aFlatnessData[#siCounter] := #aFlatnessData[#siCounter - 1];
+	      END_FOR;
+	    END_IF;
+	    
+	    #tiReturnValue := RD_LOC_T(#tdtlActualDateTime);
+	    #aFlatnessData[1].dtlDataTime := #tdtlActualDateTime;
+	    #aFlatnessData[1].xFlatnessResult := #stFlatnessdata.xFlatnessCtrlPassed;
+	    #aFlatnessData[1].uiStrokePositionDiskA := #stFlatnessdata.uiStrokePositionDiskA;
+	    #aFlatnessData[1].uiStrokePositionDiskB := #stFlatnessdata.uiStrokePositionDiskB;
+	    #aFlatnessData[1].uiStrokePositionDiskC := #stFlatnessdata.uiStrokePositionDiskC;
+	    
+	    #stFlatnessdata.xFlatnessCtrlRecorded := true;
+	    
+	  END_IF;
+	END_REGION
+	
+	
+	REGION change curent record displayed
+	  // Increase curent displayed record number
+	  IF #xDisplayNextRecord AND (#uiDisplayCurentRecord < #uiRecordMax) THEN
+	    #uiDisplayCurentRecord += 1;
+	    #xDisplayNextRecord := FALSE;
+	  ELSE
+	    #xDisplayNextRecord := FALSE;
+	  END_IF;
+	  
+	  // Decrease current displayed record number
+	  IF #xDisplayPrevRecord AND (#uiDisplayCurentRecord > #uiRecordMin) THEN
+	    #uiDisplayCurentRecord -= 1;
+	    #xDisplayPrevRecord := FALSE;
+	  ELSE
+	    #xDisplayPrevRecord := FALSE;
+	  END_IF;
+	  
+	  
+	END_REGION
+	
+	REGION Refresh displayed record
+	  
+	  #DisplayFlatRecData := #aFlatnessData[#uiDisplayCurentRecord];
+	  #suiMemDisplayCurentReccord := #uiDisplayCurentRecord;
+	  
+	END_REGION
+	
+	
+END_FUNCTION_BLOCK
+

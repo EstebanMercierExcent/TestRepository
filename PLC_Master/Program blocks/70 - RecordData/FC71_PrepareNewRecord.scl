@@ -1,0 +1,54 @@
+﻿FUNCTION "FC71_PrepareNewRecord" : Void
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      usiCurrentLayerType : USInt;
+      uiCbsNumber : UInt;
+      WorkRecipe : "stWorkRecipe";
+   END_VAR
+
+   VAR_IN_OUT 
+      ProdData : "stProductionRecord";
+   END_VAR
+
+   VAR_TEMP 
+      tdtlLocal {InstructionName := 'DTL'; LibVersion := '1.0'} : DTL;
+      tnReturnValue : Int;
+      tnCounter : Int;
+   END_VAR
+
+
+BEGIN
+	// Read local date and time
+	#tnReturnValue := RD_LOC_T(OUT => #tdtlLocal);
+	// Reccord current date
+	#ProdData.dDate := DTL_TO_DATE(#tdtlLocal);
+	// Record current time
+	#ProdData.todTime := DTL_TO_TOD(#tdtlLocal);
+	// Record Name and Layer production
+	#ProdData.sRecipeName := #WorkRecipe.RecipeName;
+	#ProdData.sRecipeLayerTypeName := #WorkRecipe.RecipeLayerType.RecipeLayerTypeName;
+	// Record Prog Number and layer type number
+	#ProdData.usiProgNumber := #WorkRecipe.RecipeTrajNumber;
+	#ProdData.usiLayerTypeNumber := #usiCurrentLayerType;
+	// Record CBS serial Number
+	#ProdData.uiCbsNumber := #uiCbsNumber;
+	//Reset all job data
+	(* // already done by copy ProdData[0] in ProdData[1]
+	FOR #tnCounter := 1 TO 6 DO
+	  // Job data for robot 1
+	  #ProdData.JobRobot1[#tnCounter].JobUsed := FALSE;
+	  #ProdData.JobRobot1[#tnCounter].DistanceChangePaper := 0;
+	  #ProdData.JobRobot1[#tnCounter].ForceTarget := 0;
+	  #ProdData.JobRobot1[#tnCounter].RobotSpeed := 0;
+	  #ProdData.JobRobot1[#tnCounter].SandingSpeed := 0;
+	  // Jod data for robot 2
+	  #ProdData.JobRobot2[#tnCounter].JobUsed := FALSE;
+	  #ProdData.JobRobot2[#tnCounter].DistanceChangePaper := 0;
+	  #ProdData.JobRobot2[#tnCounter].ForceTarget := 0;
+	  #ProdData.JobRobot2[#tnCounter].RobotSpeed := 0;
+	  #ProdData.JobRobot2[#tnCounter].SandingSpeed := 0;
+	END_FOR;
+	*)
+END_FUNCTION
+

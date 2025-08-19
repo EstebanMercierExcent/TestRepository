@@ -1,0 +1,349 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Document>
+  <Engineering version="V19" />
+  <SW.Blocks.GlobalDB ID="0">
+    <AttributeList>
+      <AutoNumber>false</AutoNumber>
+      <DBAccessibleFromOPCUA>false</DBAccessibleFromOPCUA>
+      <DBAccessibleFromWebserver>false</DBAccessibleFromWebserver>
+      <Interface><Sections xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v5">
+  <Section Name="Static">
+    <Member Name="xLightTest" Datatype="Bool">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Light test</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="xResetFault" Datatype="Bool">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Reset fault and safety</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="xStartVacuum" Datatype="Bool">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Start vacuum</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="xStopVacuum" Datatype="Bool">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Stop vacuum</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="xReqChangeBigbag" Datatype="Bool">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Request change Bigbag</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="xValidationBigbagChanged" Datatype="Bool">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Validation operator bigbag changed</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="xListRecipe" Datatype="Bool">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Do the list of all the recipe available in the data base</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="xLoadRecipe" Datatype="Bool">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Load current recipe from data base</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="xSaveRecipe" Datatype="Bool">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Save current recipe into the data base</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="xNewRecipe" Datatype="Bool">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Select next free recipe on the data base</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="xDeleteRecipe" Datatype="Bool">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Delete the recipe from the data base</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="xNextRecipe" Datatype="Bool">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Load next recipe in the data base</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="xPrevRecipe" Datatype="Bool">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Load previus recipe in the data base</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="xValideOperation" Datatype="Bool">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Validation Operator to remove or Put disk on FerRobotic head</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="xValideFault" Datatype="Bool">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Validation Operator of Flatness fault</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="xProdRecordNext" Datatype="Bool" />
+    <Member Name="xProdRecordPrev" Datatype="Bool" />
+    <Member Name="xProdRecordDeleteAll" Datatype="Bool" />
+    <Member Name="xFlatRecNextLeftRobot" Datatype="Bool" />
+    <Member Name="xFlatRecPrevLeftRobot" Datatype="Bool" />
+    <Member Name="xFlatRecDelAllLeftRobot" Datatype="Bool" />
+    <Member Name="xFlatRecNextRightRobot" Datatype="Bool" />
+    <Member Name="xFlatRecPrevRightRobot" Datatype="Bool" />
+    <Member Name="xFlatRecDelAllRightRobot" Datatype="Bool" />
+    <Member Name="xEnableStartLeftRobot" Datatype="Bool" Remanence="Retain">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Enable start robot</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="xEnableStartRightRobot" Datatype="Bool" Remanence="Retain">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Enable start robot</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="xDryRun" Datatype="Bool">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Robot run in DryRun</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="xExportProdData" Datatype="Bool" />
+    <Member Name="xExportFlatCtrlRobot1" Datatype="Bool" />
+    <Member Name="xExportFlatCtrlRobot2" Datatype="Bool" />
+    <Member Name="uiCurentRecord" Datatype="UInt" />
+    <Member Name="uiFlatCurentRecLeftRobot" Datatype="UInt" />
+    <Member Name="uiFlatCurentRecRightRobot" Datatype="UInt" />
+    <Member Name="uiDisplayJobNumber" Datatype="UInt" />
+    <Member Name="usiOperatingMode" Datatype="USInt" Remanence="Retain">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Operating mode (1 = Semi-Auto, 2 = Auto)</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="uiUserGroup" Datatype="USInt" Remanence="Retain">
+      <Comment>
+        <MultiLanguageText Lang="en-US">User grope number logged on HMI</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="LeftRobot" Datatype="Struct">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Command for left robot</MultiLanguageText>
+      </Comment>
+      <Member Name="xResetGrafcet" Datatype="Bool">
+        <Comment>
+          <MultiLanguageText Lang="en-US">Reset robot communication grafcet</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="xStartCycle" Datatype="Bool">
+        <Comment>
+          <MultiLanguageText Lang="en-US">Start Cycle</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="xStopCycle" Datatype="Bool">
+        <Comment>
+          <MultiLanguageText Lang="en-US">Stop Cycle</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="xCancelCycle" Datatype="Bool">
+        <Comment>
+          <MultiLanguageText Lang="en-US">Cancel cycle</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="xStopEndCycle" Datatype="Bool">
+        <Comment>
+          <MultiLanguageText Lang="en-US">Stop end of cycle</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="xReqChangeDisk" Datatype="Bool" />
+      <Member Name="xStartServicePath" Datatype="Bool">
+        <Comment>
+          <MultiLanguageText Lang="en-US">Start service path</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="xStopServicePath" Datatype="Bool">
+        <Comment>
+          <MultiLanguageText Lang="en-US">Stop service path</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="xCancelServicePath" Datatype="Bool">
+        <Comment>
+          <MultiLanguageText Lang="en-US">Cancel service path</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="usiJobNumberDisplay" Datatype="USInt">
+        <Comment>
+          <MultiLanguageText Lang="en-US">Job number displayed for robot left</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="uiServicePathNumber" Datatype="UInt">
+        <Comment>
+          <MultiLanguageText Lang="en-US">Service path number</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="xCmdManuLockGimball" Datatype="Bool" />
+      <Member Name="xCmdManuLockEccentric1" Datatype="Bool" />
+      <Member Name="xCmdManuLockEccentric2" Datatype="Bool" />
+      <Member Name="xCmdManuLockEccentric3" Datatype="Bool" />
+      <Member Name="xCmdManuEnableRotate" Datatype="Bool" />
+      <Member Name="xCmdManuCloseVacValve" Datatype="Bool" />
+      <Member Name="xCmdManuOpenVacValve" Datatype="Bool" />
+      <Member Name="xCmdManuRemoveConfig" Datatype="Bool">
+        <Comment>
+          <MultiLanguageText Lang="en-US">Manual command for activate the Remove config on FerRobotic Head</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="xCmdManuPickupConfig" Datatype="Bool">
+        <Comment>
+          <MultiLanguageText Lang="en-US">Manual command for activate the Pickup config on FerRobotic Head</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="xCmdManuFlatnessConfig" Datatype="Bool">
+        <Comment>
+          <MultiLanguageText Lang="en-US">Manual command for activate the Flatness check config on FerRobotic Head</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="xMaintStartProg" Datatype="Bool" />
+      <Member Name="xMaintStartMain" Datatype="Bool" />
+      <Member Name="xForceLubricationX" Datatype="Bool" />
+      <Member Name="xForceLubricationZ" Datatype="Bool" />
+      <Member Name="ParamManu" Datatype="&quot;stFerRoboticParam&quot;" />
+    </Member>
+    <Member Name="RightRobot" Datatype="Struct">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Commande for right robot</MultiLanguageText>
+      </Comment>
+      <Member Name="xResetGrafcet" Datatype="Bool">
+        <Comment>
+          <MultiLanguageText Lang="en-US">Reset robot communication grafcet</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="xStartCycle" Datatype="Bool">
+        <Comment>
+          <MultiLanguageText Lang="en-US">Start Cycle</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="xStopCycle" Datatype="Bool">
+        <Comment>
+          <MultiLanguageText Lang="en-US">Stop Cycle</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="xCancelCycle" Datatype="Bool">
+        <Comment>
+          <MultiLanguageText Lang="en-US">Cancel cycle</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="xStopEndCycle" Datatype="Bool">
+        <Comment>
+          <MultiLanguageText Lang="en-US">Stop end of cycle</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="xReqChangeDisk" Datatype="Bool" />
+      <Member Name="xStartServicePath" Datatype="Bool">
+        <Comment>
+          <MultiLanguageText Lang="en-US">Start service path</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="xStopServicePath" Datatype="Bool">
+        <Comment>
+          <MultiLanguageText Lang="en-US">Stop service path</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="xCancelServicePath" Datatype="Bool">
+        <Comment>
+          <MultiLanguageText Lang="en-US">Cancel service path</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="usiJobNumberDisplay" Datatype="USInt">
+        <Comment>
+          <MultiLanguageText Lang="en-US">Job number displayed for robot right</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="uiServicePathNumber" Datatype="UInt">
+        <Comment>
+          <MultiLanguageText Lang="en-US">Service path number</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="xCmdManuLockGimball" Datatype="Bool" />
+      <Member Name="xCmdManuLockEccentric1" Datatype="Bool" />
+      <Member Name="xCmdManuLockEccentric2" Datatype="Bool" />
+      <Member Name="xCmdManuLockEccentric3" Datatype="Bool" />
+      <Member Name="xCmdManuEnableRotate" Datatype="Bool" />
+      <Member Name="xCmdManuCloseVacValve" Datatype="Bool" />
+      <Member Name="xCmdManuOpenVacValve" Datatype="Bool" />
+      <Member Name="xCmdManuRemoveConfig" Datatype="Bool">
+        <Comment>
+          <MultiLanguageText Lang="en-US">Manual command for activate the Remove config on FerRobotic Head</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="xCmdManuPickupConfig" Datatype="Bool">
+        <Comment>
+          <MultiLanguageText Lang="en-US">Manual command for activate the Pickup config on FerRobotic Head</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="xCmdManuFlatnessConfig" Datatype="Bool">
+        <Comment>
+          <MultiLanguageText Lang="en-US">Manual command for activate the Flatness check config on FerRobotic Head</MultiLanguageText>
+        </Comment>
+      </Member>
+      <Member Name="xMaintStartProg" Datatype="Bool" />
+      <Member Name="xMaintStartMain" Datatype="Bool" />
+      <Member Name="xForceLubricationX" Datatype="Bool" />
+      <Member Name="xForceLubricationZ" Datatype="Bool" />
+      <Member Name="ParamManu" Datatype="&quot;stFerRoboticParam&quot;" />
+    </Member>
+  </Section>
+</Sections></Interface>
+      <MemoryLayout>Optimized</MemoryLayout>
+      <MemoryReserve>100</MemoryReserve>
+      <Name>DB_FromHmi</Name>
+      <Namespace />
+      <Number>29</Number>
+      <ProgrammingLanguage>DB</ProgrammingLanguage>
+    </AttributeList>
+    <ObjectList>
+      <MultilingualText ID="1" CompositionName="Comment">
+        <ObjectList>
+          <MultilingualTextItem ID="2" CompositionName="Items">
+            <AttributeList>
+              <Culture>fr-FR</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+          <MultilingualTextItem ID="3" CompositionName="Items">
+            <AttributeList>
+              <Culture>en-US</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+          <MultilingualTextItem ID="4" CompositionName="Items">
+            <AttributeList>
+              <Culture>es-ES</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+        </ObjectList>
+      </MultilingualText>
+      <MultilingualText ID="5" CompositionName="Title">
+        <ObjectList>
+          <MultilingualTextItem ID="6" CompositionName="Items">
+            <AttributeList>
+              <Culture>fr-FR</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+          <MultilingualTextItem ID="7" CompositionName="Items">
+            <AttributeList>
+              <Culture>en-US</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+          <MultilingualTextItem ID="8" CompositionName="Items">
+            <AttributeList>
+              <Culture>es-ES</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+        </ObjectList>
+      </MultilingualText>
+    </ObjectList>
+  </SW.Blocks.GlobalDB>
+</Document>

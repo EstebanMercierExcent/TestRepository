@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Document>
+  <Engineering version="V19" />
+  <SW.Blocks.InstanceDB ID="0">
+    <AttributeList>
+      <AutoNumber>false</AutoNumber>
+      <DBAccessibleFromOPCUA>false</DBAccessibleFromOPCUA>
+      <DBAccessibleFromWebserver>false</DBAccessibleFromWebserver>
+      <HeaderVersion>2.1</HeaderVersion>
+      <InstanceOfName>LSNTP_Server</InstanceOfName>
+      <InstanceOfType>FB</InstanceOfType>
+      <Interface><Sections xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v5">
+  <Section Name="Input">
+    <Member Name="init" Datatype="Bool" />
+    <Member Name="referenceId" Datatype="USInt" />
+    <Member Name="lastTimeSet" Datatype="DTL" Version="1.0" />
+    <Member Name="connID" Datatype="CONN_OUC" />
+    <Member Name="hwID" Datatype="HW_ANY" />
+  </Section>
+  <Section Name="Output">
+    <Member Name="error" Datatype="Bool" />
+    <Member Name="statusID" Datatype="Int" />
+    <Member Name="status" Datatype="Word" />
+  </Section>
+  <Section Name="InOut" />
+  <Section Name="Static">
+    <Member Name="InstTCON" Datatype="TCON" Version="4.0">
+      <AttributeList>
+        <BooleanAttribute Name="SetPoint" SystemDefined="true">true</BooleanAttribute>
+      </AttributeList>
+    </Member>
+    <Member Name="InstTURCV" Datatype="TURCV" Version="4.0">
+      <AttributeList>
+        <BooleanAttribute Name="SetPoint" SystemDefined="true">true</BooleanAttribute>
+      </AttributeList>
+    </Member>
+    <Member Name="InstTUSEND" Datatype="TUSEND" Version="4.0">
+      <AttributeList>
+        <BooleanAttribute Name="SetPoint" SystemDefined="true">true</BooleanAttribute>
+      </AttributeList>
+    </Member>
+    <Member Name="InstTDISCON" Datatype="TDISCON" Version="2.1">
+      <AttributeList>
+        <BooleanAttribute Name="SetPoint" SystemDefined="true">true</BooleanAttribute>
+      </AttributeList>
+    </Member>
+    <Member Name="statDiscon" Datatype="Struct">
+      <Member Name="req" Datatype="Bool" />
+      <Member Name="done" Datatype="Bool" />
+      <Member Name="error" Datatype="Bool" />
+      <Member Name="status" Datatype="Word" />
+    </Member>
+    <Member Name="statCon" Datatype="Struct">
+      <Member Name="req" Datatype="Bool" />
+      <Member Name="done" Datatype="Bool" />
+      <Member Name="error" Datatype="Bool" />
+      <Member Name="status" Datatype="Word" />
+      <Member Name="param" Datatype="TCON_IP_v4" Version="1.0">
+        <AttributeList>
+          <BooleanAttribute Name="SetPoint" SystemDefined="true">true</BooleanAttribute>
+        </AttributeList>
+      </Member>
+    </Member>
+    <Member Name="statRcv" Datatype="Struct">
+      <Member Name="req" Datatype="Bool" />
+      <Member Name="busy" Datatype="Bool" />
+      <Member Name="error" Datatype="Bool" />
+      <Member Name="ndr" Datatype="Bool" />
+      <Member Name="len" Datatype="UDInt" />
+      <Member Name="status" Datatype="Word" />
+      <Member Name="addr" Datatype="TADDR_Param" Version="1.0">
+        <AttributeList>
+          <BooleanAttribute Name="SetPoint" SystemDefined="true">true</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="tel" Datatype="&quot;LSNTP_typeTelegram&quot;">
+        <AttributeList>
+          <BooleanAttribute Name="SetPoint" SystemDefined="true">true</BooleanAttribute>
+        </AttributeList>
+      </Member>
+    </Member>
+    <Member Name="statSend" Datatype="Struct">
+      <Member Name="req" Datatype="Bool" />
+      <Member Name="done" Datatype="Bool" />
+      <Member Name="reqDone" Datatype="Bool" />
+      <Member Name="error" Datatype="Bool" />
+      <Member Name="status" Datatype="Word" />
+      <Member Name="addr" Datatype="TADDR_Param" Version="1.0">
+        <AttributeList>
+          <BooleanAttribute Name="SetPoint" SystemDefined="true">true</BooleanAttribute>
+        </AttributeList>
+      </Member>
+      <Member Name="tel" Datatype="&quot;LSNTP_typeTelegram&quot;">
+        <AttributeList>
+          <BooleanAttribute Name="SetPoint" SystemDefined="true">true</BooleanAttribute>
+        </AttributeList>
+      </Member>
+    </Member>
+    <Member Name="statState" Datatype="Int" />
+    <Member Name="statEdge" Datatype="Struct">
+      <Member Name="init" Datatype="Bool" />
+    </Member>
+  </Section>
+</Sections></Interface>
+      <Name>iDB_ServerNTP</Name>
+      <Namespace />
+      <Number>200</Number>
+      <ProgrammingLanguage>DB</ProgrammingLanguage>
+    </AttributeList>
+    <ObjectList>
+      <MultilingualText ID="1" CompositionName="Comment">
+        <ObjectList>
+          <MultilingualTextItem ID="2" CompositionName="Items">
+            <AttributeList>
+              <Culture>fr-FR</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+          <MultilingualTextItem ID="3" CompositionName="Items">
+            <AttributeList>
+              <Culture>en-US</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+          <MultilingualTextItem ID="4" CompositionName="Items">
+            <AttributeList>
+              <Culture>es-ES</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+        </ObjectList>
+      </MultilingualText>
+      <MultilingualText ID="5" CompositionName="Title">
+        <ObjectList>
+          <MultilingualTextItem ID="6" CompositionName="Items">
+            <AttributeList>
+              <Culture>fr-FR</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+          <MultilingualTextItem ID="7" CompositionName="Items">
+            <AttributeList>
+              <Culture>en-US</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+          <MultilingualTextItem ID="8" CompositionName="Items">
+            <AttributeList>
+              <Culture>es-ES</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+        </ObjectList>
+      </MultilingualText>
+    </ObjectList>
+  </SW.Blocks.InstanceDB>
+</Document>

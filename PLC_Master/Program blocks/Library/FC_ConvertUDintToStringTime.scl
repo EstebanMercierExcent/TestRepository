@@ -1,0 +1,74 @@
+﻿FUNCTION "FC_ConvertUDintToStringTime" : Void
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      udiTime : UDInt;
+   END_VAR
+
+   VAR_OUTPUT 
+      sTime : String;
+   END_VAR
+
+   VAR_TEMP 
+      tudiTemp : UDInt;
+      tudiTempHour : UDInt;
+      tudiTempMinute : UDInt;
+      tudiTempSeconde : UDInt;
+      tsTmp : String;
+      tsHour : String;
+      tsMinute : String;
+      tsSecond : String;
+   END_VAR
+
+   VAR CONSTANT 
+      cSecondHour : UDInt := 3600;
+      cSecondMinute : UDInt := 60;
+   END_VAR
+
+
+BEGIN
+	// Reset Time
+	#sTime := '';
+	
+	// Calcul hour
+	IF #udiTime >= #cSecondHour THEN
+	  #tudiTempHour := #udiTime / #cSecondHour;
+	  #tsTmp := DELETE(IN := UDINT_TO_STRING(#tudiTempHour), L := 1, P := 1);
+	  #tsHour := CONCAT_STRING(IN1 := #tsTmp, IN2 := 'h ');
+	  #tudiTemp := (#udiTime - (#tudiTempHour * #cSecondHour));
+	ELSE
+	  #tsHour := '0h ';
+	  #tudiTemp := #udiTime;
+	END_IF;
+	
+	// Calcul Minutes
+	#tudiTempMinute := #tudiTemp / #cSecondMinute;
+	#tsTmp := DELETE(IN := UDINT_TO_STRING(#tudiTempMinute), L := 1, P := 1);
+	IF #tudiTempMinute = 0 THEN
+	  #tsMinute := '00';
+	ELSIF #tudiTempMinute < 10 THEN
+	  #tsMinute := CONCAT(IN1 := '0', IN2 := #tsTmp);
+	ELSE
+	  #tsMinute := #tsTmp;
+	END_IF;
+	#tsMinute := CONCAT_STRING(IN1 := #tsMinute, IN2 := 'm ');
+	#tudiTemp := (#tudiTemp - (#tudiTempMinute * #cSecondMinute));
+	
+	// Calcul Seconds
+	#tudiTempSeconde := #tudiTemp;
+	#tsTmp := DELETE(IN := UDINT_TO_STRING(#tudiTempSeconde), L := 1, P := 1);
+	IF #tudiTempSeconde = 0 THEN
+	  #tsSecond := '00';
+	ELSIF #tudiTempSeconde < 10 THEN
+	  #tsSecond := CONCAT(IN1 := '0', IN2 := #tsTmp);
+	ELSE
+	  #tsSecond := #tsTmp;
+	END_IF;
+	#tsSecond := CONCAT_STRING(IN1 := #tsSecond, IN2 := 's');
+	
+	#sTime := CONCAT(IN1 := #tsHour, IN2 := #tsMinute);
+	#sTime := CONCAT(IN1 := #sTime, IN2 := #tsSecond);
+	
+	
+END_FUNCTION
+

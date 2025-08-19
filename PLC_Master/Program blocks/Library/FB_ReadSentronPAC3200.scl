@@ -1,0 +1,394 @@
+﻿FUNCTION_BLOCK "FB_ReadSentronPAC3200"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      xEnable { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Activation du bloc
+      xReset { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      tDelay { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Time;
+      CommData {InstructionName := 'TCON_IP_v4'; LibVersion := '1.0'; ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : TCON_IP_v4;
+   END_VAR
+
+   VAR_OUTPUT 
+      xBusy { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      xValid { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      xError { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      wStatus { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Word;
+   END_VAR
+
+   VAR_IN_OUT 
+      DataSentron : "Sentron_PAC";
+   END_VAR
+
+   VAR 
+      swStatus { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Word := #StatusNoCall;
+      sdiFbState { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : DInt := #FB_StateNoProcessing;
+      snStep { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Int;
+      sxStartDelay { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      sxValid { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      sxBusy { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      sxError { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      sxErrorUserCleared { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      sxErrorAutoCleared { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      sxDisablingCompleted { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      sxEnabledOld { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      sxMBcReq { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      sxMBcDisconnect { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      sxMBcDone { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      sxMBcBusy { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      sxMBcError { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      swMBcStatus { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Word;
+      sudiMBcAddress { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UDInt;
+      suiMBcLen { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;
+      sarDataTemp { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Array[0..34] of Real;
+      miDB_ModbusClient {InstructionName := 'MB_CLIENT'; LibVersion := '6.0'; ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : MB_CLIENT;
+      miDB_TonDelay {InstructionName := 'TON_TIME'; LibVersion := '1.0'; ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : TON_TIME;
+   END_VAR
+
+   VAR_TEMP 
+      txEnable : Bool;
+   END_VAR
+
+   VAR CONSTANT 
+      FB_StateNoProcessing : DInt := 0;
+      FB_StateEnabling : DInt := 10;
+      FB_StateProcessing : DInt := 50;
+      FB_StateDisabling : DInt := 90;
+      StepInitial : Int := 0;
+      StepReqPhase1 : Int := 10;
+      StepWaitDonePh1 : Int := 20;
+      StepWriteDataPh1 : Int := 40;
+      StepReqPhase2 : Int := 50;
+      StepWaitDonePh2 : Int := 60;
+      StepWriteDataPh2 : Int := 80;
+      StepReqPhase3 : Int := 90;
+      StepWaitDonePh3 : Int := 100;
+      StepWriteDataPh3 : Int := 120;
+      StepWaitDelay : Int := 130;
+      StatusNoCall : Word := 16#7000;
+      StatusFirstCall : Word := 16#7001;
+      StatusSubsequenceCall : Word := 16#7002;
+      ErrUndefinedState : Word := 16#8600;
+      ErrInBlocOperation : Word := 16#8001;
+      ErrParametrization : Word := 16#8200;
+      ErrProcessingExtern : Word := 16#8400;
+      ErrProcessingIntern : Word := 16#8600;
+      ErrAreaReserved : Word := 16#8800;
+      ErrUserDefinedClasses : Word := 16#9000;
+   END_VAR
+
+
+BEGIN
+	#txEnable := #xEnable;
+	REGION ACTIVATION/DESACTIVATION
+	  IF #txEnable AND #swStatus = #StatusNoCall THEN // Mise en service du bloc FB
+	    #sxValid := FALSE;
+	    #sxBusy := FALSE;
+	    #sxError := FALSE;
+	    #swStatus := #StatusFirstCall;
+	    #sxErrorUserCleared := FALSE;
+	    #sxErrorAutoCleared := FALSE;
+	    #sxDisablingCompleted := FALSE;
+	    #sdiFbState := #FB_StateEnabling;
+	   
+	  ELSIF ((NOT #txEnable) AND #sxEnabledOld) THEN // Desactivation du bloc FB
+	    #sdiFbState := #FB_StateDisabling;
+	    ;
+	  ELSIF (#swStatus = #StatusFirstCall) THEN
+	    #swStatus := #StatusSubsequenceCall;
+	  END_IF;
+	  
+	  // Edge detection 'enable' input
+	  #sxEnabledOld := #txEnable;
+	END_REGION ACTIVATION/DESACTIVATION
+	
+	REGION APPEL BLOC FONCTION
+	  #miDB_ModbusClient(REQ          := #sxMBcReq,
+	                     DISCONNECT   := FALSE,
+	                     MB_MODE      := 0,
+	                     MB_DATA_ADDR := #sudiMBcAddress,
+	                     MB_DATA_LEN  := #suiMBcLen,
+	                     DONE         => #sxMBcDone,
+	                     BUSY         => #sxMBcBusy,
+	                     ERROR        => #sxMBcError,
+	                     STATUS       => #swMBcStatus,
+	                     MB_DATA_PTR  := #sarDataTemp,
+	                     CONNECT      := #CommData);
+	  
+	  
+	  #miDB_TonDelay(IN := #sxStartDelay,
+	                 PT := #tDelay);
+	  
+	END_REGION APPEL BLOC FONCTION
+	
+	IF (#swStatus = #StatusNoCall) THEN // Nothing to do -> End here to reduce "system load"
+	  RETURN;
+	END_IF;
+	
+	REGION STATE MACHINE
+	  CASE #sdiFbState OF
+	      
+	    #FB_StateNoProcessing:
+	      REGION NoProcessing
+	        #snStep := #StepInitial; // Step to init
+	        #sxMBcReq := FALSE; // Raz request for MB client
+	        #sxMBcDisconnect := TRUE; // Enable disconnecting
+	        #sxStartDelay := FALSE; // Stop timer delay
+	        IF #sxError AND #xReset THEN
+	          #sxErrorUserCleared := FALSE;
+	          ;//Do nothing more
+	        END_IF;
+	      END_REGION NoProcessing  
+	      
+	    #FB_StateEnabling:
+	      REGION Enabling
+	        #sxValid := FALSE;
+	        #sxBusy := TRUE;
+	        #sxError := FALSE;
+	        #sxMBcDisconnect := FALSE;
+	        #sxMBcReq := FALSE;
+	        #sxStartDelay := FALSE;
+	        #snStep := #StepInitial; //Initialisation du grafcet de fonctionnement
+	        #sdiFbState := #FB_StateProcessing;
+	      END_REGION Enabling
+	      
+	    #FB_StateProcessing:
+	      REGION Processing
+	        CASE #snStep OF
+	            
+	          #StepInitial:
+	            #sudiMBcAddress := 40002;
+	            #suiMBcLen := 70;
+	            #snStep := #StepReqPhase1;
+	            
+	          #StepReqPhase1:
+	            #sxMBcReq := TRUE;
+	            IF #sxMBcBusy THEN
+	              #snStep := #StepWaitDonePh1;
+	            ELSIF #sxMBcError THEN
+	              #sxMBcReq := FALSE;
+	              #sxErrorUserCleared := TRUE;
+	            END_IF;
+	            
+	          #StepWaitDonePh1:
+	            IF #sxMBcDone THEN
+	              #sxMBcReq := FALSE;
+	              #snStep := #StepWriteDataPh1;
+	            ELSIF #sxMBcError THEN
+	              #sxMBcReq := FALSE;
+	              #sxErrorUserCleared := TRUE;
+	            END_IF;
+	            
+	          #StepWriteDataPh1:
+	            #DataSentron.Voltage_PH_N_L1      := #sarDataTemp[0];
+	            #DataSentron.Voltage_PH_N_L2      := #sarDataTemp[1];
+	            #DataSentron.Voltage_PH_N_L3      := #sarDataTemp[2];
+	            #DataSentron.Voltage_PH_PH_L12    := #sarDataTemp[3];
+	            #DataSentron.Voltage_PH_PH_L23    := #sarDataTemp[4];
+	            #DataSentron.Voltage_PH_PH_L31    := #sarDataTemp[5];
+	            #DataSentron.Current_I_L1         := #sarDataTemp[6];
+	            #DataSentron.Current_I_L2         := #sarDataTemp[7];
+	            #DataSentron.Current_I_L3         := #sarDataTemp[8];
+	            #DataSentron.Apparent_Power_L1    := #sarDataTemp[9] / 100.0;
+	            #DataSentron.Apparent_Power_L2    := #sarDataTemp[10] / 100.0;
+	            #DataSentron.Apparent_Power_L3 := #sarDataTemp[11] / 100.0;
+	            #DataSentron.Active_Power_L1      := #sarDataTemp[12] / 100.0;
+	            #DataSentron.Active_Power_L2      := #sarDataTemp[13] / 100.0;
+	            #DataSentron.Active_Power_L3      := #sarDataTemp[14] / 100.0;
+	            #DataSentron.Reactive_Power_L1    := #sarDataTemp[15] / 100.0;
+	            #DataSentron.Reactive_Power_L2    := #sarDataTemp[16] / 100.0;
+	            #DataSentron.Reactive_Power_L3    := #sarDataTemp[17] / 100.0;
+	            #DataSentron.Power_Factor_L1      := #sarDataTemp[18] / 100.0;
+	            #DataSentron.Power_Factor_L2      := #sarDataTemp[19] / 100.0;
+	            #DataSentron.Power_Factor_L3      := #sarDataTemp[20] / 100.0;
+	            #DataSentron.THD_R_V_L1           := #sarDataTemp[21];
+	            #DataSentron.THD_R_V_L2           := #sarDataTemp[22];
+	            #DataSentron.THD_R_V_L3           := #sarDataTemp[23];
+	            #DataSentron.THD_R_I_L1           := #sarDataTemp[24];
+	            #DataSentron.THD_R_I_L2           := #sarDataTemp[25];
+	            #DataSentron.THD_R_I_L3           := #sarDataTemp[26];
+	            #DataSentron.Frequency            := #sarDataTemp[27];
+	            #DataSentron.Total_Apparent_Power := #sarDataTemp[31] / 100.0;
+	            #DataSentron.Total_Active_Power   := #sarDataTemp[32] / 100.0;
+	            #DataSentron.Total_Reactive_Power := #sarDataTemp[33] / 100.0;
+	            #DataSentron.Total_Power_Factor   := #sarDataTemp[34] / 100.0;
+	            #sudiMBcAddress := 40076;
+	            #suiMBcLen := 70;
+	            #snStep := #StepReqPhase2;
+	            
+	          #StepReqPhase2:
+	            #sxMBcReq := TRUE;
+	            IF #sxMBcBusy THEN
+	              #snStep := #StepWaitDonePh2;
+	            ELSIF #sxMBcError THEN
+	              #sxMBcReq := FALSE;
+	              #sxErrorUserCleared := TRUE;
+	            END_IF;
+	            
+	          #StepWaitDonePh2:
+	            IF #sxMBcDone THEN
+	              #sxMBcReq := FALSE;
+	              #snStep := #StepWriteDataPh2;
+	            ELSIF #sxMBcError THEN
+	              #sxMBcReq := FALSE;
+	              #sxErrorUserCleared := TRUE;
+	            END_IF;
+	            
+	          #StepWriteDataPh2:
+	            #DataSentron.Voltage_PH_N_L1_MAX := #sarDataTemp[0];
+	            #DataSentron.Voltage_PH_N_L2_MAX := #sarDataTemp[1];
+	            #DataSentron.Voltage_PH_N_L3_MAX := #sarDataTemp[2];
+	            #DataSentron.Voltage_PH_PH_L12_MAX := #sarDataTemp[3];
+	            #DataSentron.Voltage_PH_PH_L23_MAX := #sarDataTemp[4];
+	            #DataSentron.Voltage_PH_PH_L31_MAX := #sarDataTemp[5];
+	            #DataSentron.Current_I_L1_MAX := #sarDataTemp[6];
+	            #DataSentron.Current_I_L2_MAX := #sarDataTemp[7];
+	            #DataSentron.Current_I_L3_MAX := #sarDataTemp[8];
+	            #DataSentron.Apparent_Power_L1_MAX := #sarDataTemp[9] / 100.0;
+	            #DataSentron.Apparent_Power_L2_MAX := #sarDataTemp[10] / 100.0;
+	            #DataSentron.Apparent_Power_L3_MAX := #sarDataTemp[11] / 100.0;
+	            #DataSentron.Active_Power_L1_MAX := #sarDataTemp[12] / 100.0;
+	            #DataSentron.Active_Power_L2_MAX := #sarDataTemp[13] / 100.0;
+	            #DataSentron.Active_Power_L3_MAX := #sarDataTemp[14] / 100.0;
+	            #DataSentron.Reactive_Power_L1_MAX := #sarDataTemp[15] / 100.0;
+	            #DataSentron.Reactive_Power_L2_MAX := #sarDataTemp[16] / 100.0;
+	            #DataSentron.Reactive_Power_L3_MAX := #sarDataTemp[17] / 100.0;
+	            #DataSentron.Power_Factor_L1_MAX := #sarDataTemp[18] / 100.0;
+	            #DataSentron.Power_Factor_L2_MAX := #sarDataTemp[19] / 100.0;
+	            #DataSentron.Power_Factor_L3_MAX := #sarDataTemp[20] / 100.0;
+	            #DataSentron.THD_R_V_L1_MAX := #sarDataTemp[21];
+	            #DataSentron.THD_R_V_L2_MAX := #sarDataTemp[22];
+	            #DataSentron.THD_R_V_L3_MAX := #sarDataTemp[23];
+	            #DataSentron.THD_R_I_L1_MAX := #sarDataTemp[24];
+	            #DataSentron.THD_R_I_L2_MAX := #sarDataTemp[25];
+	            #DataSentron.THD_R_I_L3_MAX := #sarDataTemp[26];
+	            #DataSentron.Frequency_MAX := #sarDataTemp[27];
+	            #DataSentron.Total_Apparent_Power_MAX := #sarDataTemp[31] / 100.0;
+	            #DataSentron.Total_Active_Power_MAX := #sarDataTemp[32] / 100.0;
+	            #DataSentron.Total_Reactive_Power_MAX := #sarDataTemp[33] / 100.0;
+	            #DataSentron.Total_Power_Factor_MAX := #sarDataTemp[34] / 100.0;
+	            #sudiMBcAddress := 40146;
+	            #suiMBcLen := 58;
+	            #snStep := #StepReqPhase3;
+	            
+	          #StepReqPhase3:
+	            #sxMBcReq := TRUE;
+	            IF #sxMBcBusy THEN
+	              #snStep := #StepWaitDonePh3;
+	            ELSIF #sxMBcError THEN
+	              #sxMBcReq := FALSE;
+	              #sxErrorUserCleared := TRUE;
+	            END_IF;
+	            
+	          #StepWaitDonePh3:
+	            IF #sxMBcDone THEN
+	              #sxMBcReq := FALSE;
+	              #snStep := #StepWriteDataPh3;
+	            ELSIF #sxMBcError THEN
+	              #sxMBcReq := FALSE;
+	              #sxErrorUserCleared := TRUE;
+	            END_IF;
+	            
+	          #StepWriteDataPh3:
+	            #DataSentron.Voltage_PH_N_L1_MIN := #sarDataTemp[0];
+	            #DataSentron.Voltage_PH_N_L2_MIN := #sarDataTemp[1];
+	            #DataSentron.Voltage_PH_N_L3_MIN := #sarDataTemp[2];
+	            #DataSentron.Voltage_PH_PH_L12_MIN := #sarDataTemp[3];
+	            #DataSentron.Voltage_PH_PH_L23_MIN := #sarDataTemp[4];
+	            #DataSentron.Voltage_PH_PH_L31_MIN := #sarDataTemp[5];
+	            #DataSentron.Current_I_L1_MIN := #sarDataTemp[6];
+	            #DataSentron.Current_I_L2_MIN := #sarDataTemp[7];
+	            #DataSentron.Current_I_L3_MIN := #sarDataTemp[8];
+	            #DataSentron.Apparent_Power_L1_MIN := #sarDataTemp[9] / 100.0;
+	            #DataSentron.Apparent_Power_L2_MIN := #sarDataTemp[10] / 100.0;
+	            #DataSentron.Apparent_Power_L3_MIN := #sarDataTemp[11] / 100.0;
+	            #DataSentron.Active_Power_L1_MIN := #sarDataTemp[12] / 100.0;
+	            #DataSentron.Active_Power_L2_MIN := #sarDataTemp[13] / 100.0;
+	            #DataSentron.Active_Power_L3_MIN := #sarDataTemp[14] / 100.0;
+	            #DataSentron.Reactive_Power_L1_MIN := #sarDataTemp[15] / 100.0;
+	            #DataSentron.Reactive_Power_L2_MIN := #sarDataTemp[16] / 100.0;
+	            #DataSentron.Reactive_Power_L3_MIN := #sarDataTemp[17] / 100.0;
+	            #DataSentron.Power_Factor_L1_MIN := #sarDataTemp[18];
+	            #DataSentron.Power_Factor_L2_MIN := #sarDataTemp[19];
+	            #DataSentron.Power_Factor_L3_MIN := #sarDataTemp[20];
+	            #DataSentron.Frequency_MIN := #sarDataTemp[21];
+	            #DataSentron.Total_Apparent_Power_MIN := #sarDataTemp[25] / 100.0;
+	            #DataSentron.Total_Active_Power_MIN := #sarDataTemp[26] / 100.0;
+	            #DataSentron.Total_Reactive_Power_MIN := #sarDataTemp[27] / 100.0;
+	            #DataSentron.Total_Power_Factor_MIN := #sarDataTemp[28] / 100.0;
+	            #sudiMBcAddress := 0;
+	            #suiMBcLen := 0;
+	            #snStep := #StepWaitDelay;
+	            
+	          #StepWaitDelay:
+	            #sxStartDelay := TRUE;
+	            IF #miDB_TonDelay.Q THEN
+	              #sxStartDelay := FALSE;
+	              #snStep := #StepInitial;
+	            END_IF;
+	            
+	          ELSE
+	            // Si tu es la, t'as merdé un truc
+	            ;
+	        END_CASE;
+	      END_REGION Processing
+	      
+	      
+	    #FB_StateDisabling:
+	      REGION Disabling 
+	        #snStep := #StepInitial; //Initialisation du grafcet de fonctionnement
+	        #sxMBcReq := FALSE;
+	        #sxMBcDisconnect := TRUE;
+	        #sxStartDelay := FALSE;
+	        #sxDisablingCompleted := TRUE;
+	        
+	      END_REGION Disabling       
+	    ELSE
+	      REGION Undefined state
+	        #swStatus := #ErrUndefinedState;
+	        #sxErrorUserCleared := TRUE;
+	      END_REGION Undefined sta      
+	  END_CASE;
+	  
+	END_REGION STATE MACHINE
+	    
+	
+	REGION SORTIES
+	  IF #sxDisablingCompleted THEN
+	    #sxValid := FALSE;
+	    #sxBusy := FALSE;
+	    #sxError := FALSE;
+	    #sxErrorAutoCleared := FALSE;
+	    #sxDisablingCompleted := FALSE;
+	    #swStatus := #StatusNoCall;
+	  ELSIF (#sxErrorUserCleared AND (NOT #sxError)) THEN
+	    #sxValid := FALSE;
+	    #sxBusy := FALSE;
+	    #sxError := TRUE;
+	    IF #sxMBcError THEN
+	      #swStatus := #swMBcStatus;
+	    END_IF;
+	    #sdiFbState := #FB_StateNoProcessing;
+	  ELSIF (#sxErrorAutoCleared AND  (NOT #sxError)) THEN
+	    #sxValid := FALSE;
+	    #sxBusy := TRUE;
+	    #sxError := TRUE;
+	  ELSIF ((NOT #sxErrorUserCleared) AND (NOT #sxErrorAutoCleared) AND #sxError) THEN
+	    #sxValid := TRUE;
+	    #sxBusy := TRUE;
+	    #sxError := FALSE;
+	    #sdiFbState := #FB_StateEnabling;
+	    #swStatus := #StatusSubsequenceCall;
+	  END_IF;
+	END_REGION SORTIES
+	
+	REGION ECRITURE VALEURS DE SORTIES
+	  #xValid := #sxValid;
+	  #xBusy := #sxBusy;
+	  #xError := #sxError;
+	  #wStatus := #swStatus;
+	  
+	END_REGION ECRITURE VALEURS DE SORTIES
+	
+	
+END_FUNCTION_BLOCK
+
