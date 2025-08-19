@@ -1,0 +1,27 @@
+﻿FUNCTION "FC32_SwapOutput" : Void
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      outCommFerRobotic : "stSendFerRobotics";
+   END_VAR
+
+   VAR_OUTPUT 
+      wSetForceTarget : Word;
+      wSetForceZero : Word;
+      bSetTimeRamp : Byte;
+      wSetSpeed : Word;
+   END_VAR
+
+
+BEGIN
+	// Swap word of Set Force Target value
+	#wSetForceTarget := SWAP(INT_TO_WORD(#outCommFerRobotic.nSetForceTarget));
+	// Swap word of Set Force Zero value
+	#wSetForceZero := SWAP(INT_TO_WORD(#outCommFerRobotic.nSetForceZero));
+	// Swap word of Set Speed value
+	#wSetSpeed := SWAP(UINT_TO_WORD(#outCommFerRobotic.uiSetSpeed));
+	// Convert word to USint for time Ramp value
+	#bSetTimeRamp := USINT_TO_BYTE(#outCommFerRobotic.usiSetTimeRamp);
+	
+END_FUNCTION
+

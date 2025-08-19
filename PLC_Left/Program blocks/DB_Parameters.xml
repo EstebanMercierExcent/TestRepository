@@ -1,0 +1,396 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Document>
+  <Engineering version="V19" />
+  <SW.Blocks.GlobalDB ID="0">
+    <AttributeList>
+      <DBAccessibleFromOPCUA>false</DBAccessibleFromOPCUA>
+      <DBAccessibleFromWebserver>false</DBAccessibleFromWebserver>
+      <Interface><Sections xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v5">
+  <Section Name="Static">
+    <Member Name="SensorParameter42B4" Datatype="&quot;stConfigScaleIntReal&quot;" Remanence="Retain">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalAccessible" SystemDefined="true">false</BooleanAttribute>
+        <BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">Parameter for sensor car body detection (42B4 &amp; 42B3)</MultiLanguageText>
+      </Comment>
+      <Sections>
+        <Section Name="None">
+          <Member Name="nInputMin" Datatype="Int">
+            <StartValue>0</StartValue>
+          </Member>
+          <Member Name="nIntputMax" Datatype="Int">
+            <StartValue>27648</StartValue>
+          </Member>
+          <Member Name="xUniPolar" Datatype="Bool">
+            <StartValue>TRUE</StartValue>
+          </Member>
+          <Member Name="xReverseValue" Datatype="Bool">
+            <StartValue>TRUE</StartValue>
+          </Member>
+          <Member Name="rOutputMin" Datatype="Real">
+            <StartValue>200.0</StartValue>
+          </Member>
+          <Member Name="rOutputMax" Datatype="Real">
+            <StartValue>1000.0</StartValue>
+          </Member>
+          <Member Name="rOffsetFixe" Datatype="Real">
+            <StartValue>0.0</StartValue>
+          </Member>
+          <Member Name="rOffsetProp" Datatype="Real">
+            <StartValue>1.0</StartValue>
+          </Member>
+        </Section>
+      </Sections>
+    </Member>
+    <Member Name="SwitchSensorValue" Datatype="Real" Remanence="Retain">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalAccessible" SystemDefined="true">false</BooleanAttribute>
+        <BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">Level parameter switch for car body detection</MultiLanguageText>
+      </Comment>
+      <StartValue>650.0</StartValue>
+    </Member>
+    <Member Name="uiSpeedLockEccentric" Datatype="UInt" Remanence="Retain">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalAccessible" SystemDefined="true">false</BooleanAttribute>
+        <BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">Rotation speed for lock eccentric</MultiLanguageText>
+      </Comment>
+      <StartValue>50</StartValue>
+    </Member>
+    <Member Name="RemoveSandPaperParam" Datatype="&quot;stFerRoboticParam&quot;" Remanence="Retain">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalAccessible" SystemDefined="true">false</BooleanAttribute>
+        <BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">FerRobotic parameter for remove the wor sandpaper</MultiLanguageText>
+      </Comment>
+      <Sections>
+        <Section Name="None">
+          <Member Name="nSetForceTarget" Datatype="Int">
+            <StartValue>20</StartValue>
+          </Member>
+          <Member Name="nSetForceZero" Datatype="Int">
+            <StartValue>10</StartValue>
+          </Member>
+          <Member Name="usiSetTimeRamp" Datatype="USInt">
+            <StartValue>0</StartValue>
+          </Member>
+          <Member Name="uiSetSpeed" Datatype="UInt">
+            <StartValue>0</StartValue>
+          </Member>
+        </Section>
+      </Sections>
+    </Member>
+    <Member Name="PickUpSandPaperParam" Datatype="&quot;stFerRoboticParam&quot;" Remanence="Retain">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalAccessible" SystemDefined="true">false</BooleanAttribute>
+        <BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">FerRobotic parameter for pich up a new sandpaper</MultiLanguageText>
+      </Comment>
+      <Sections>
+        <Section Name="None">
+          <Member Name="nSetForceTarget" Datatype="Int">
+            <StartValue>100</StartValue>
+          </Member>
+          <Member Name="nSetForceZero" Datatype="Int">
+            <StartValue>0</StartValue>
+          </Member>
+          <Member Name="usiSetTimeRamp" Datatype="USInt">
+            <StartValue>0</StartValue>
+          </Member>
+          <Member Name="uiSetSpeed" Datatype="UInt">
+            <StartValue>0</StartValue>
+          </Member>
+        </Section>
+      </Sections>
+    </Member>
+    <Member Name="FlatnessCtrlParam" Datatype="&quot;stFerRoboticParam&quot;" Remanence="Retain">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalAccessible" SystemDefined="true">false</BooleanAttribute>
+        <BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">FerRobotic paramter for flatness contrl disk planeity</MultiLanguageText>
+      </Comment>
+      <Sections>
+        <Section Name="None">
+          <Member Name="nSetForceTarget" Datatype="Int">
+            <StartValue>20</StartValue>
+          </Member>
+          <Member Name="nSetForceZero" Datatype="Int">
+            <StartValue>0</StartValue>
+          </Member>
+          <Member Name="usiSetTimeRamp" Datatype="USInt">
+            <StartValue>0</StartValue>
+          </Member>
+          <Member Name="uiSetSpeed" Datatype="UInt">
+            <StartValue>0</StartValue>
+          </Member>
+        </Section>
+      </Sections>
+    </Member>
+    <Member Name="ConfigGreaseZaxis" Datatype="&quot;stConfigGrease&quot;" Remanence="Retain">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalAccessible" SystemDefined="true">false</BooleanAttribute>
+        <BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Sections>
+        <Section Name="None">
+          <Member Name="uiNbPulsePerKm" Datatype="UInt">
+            <StartValue>4411</StartValue>
+          </Member>
+          <Member Name="uiKmForGreasing" Datatype="UInt">
+            <StartValue>32</StartValue>
+          </Member>
+          <Member Name="tTimeEnableGreasePump" Datatype="Time">
+            <StartValue>T#1M</StartValue>
+          </Member>
+          <Member Name="tTimeoutPxGrease" Datatype="Time">
+            <StartValue>T#1M</StartValue>
+          </Member>
+        </Section>
+      </Sections>
+    </Member>
+    <Member Name="ConfigGreaseXaxis" Datatype="&quot;stConfigGrease&quot;" Remanence="Retain">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalAccessible" SystemDefined="true">false</BooleanAttribute>
+        <BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Sections>
+        <Section Name="None">
+          <Member Name="uiNbPulsePerKm" Datatype="UInt">
+            <StartValue>4411</StartValue>
+          </Member>
+          <Member Name="uiKmForGreasing" Datatype="UInt">
+            <StartValue>32</StartValue>
+          </Member>
+          <Member Name="tTimeEnableGreasePump" Datatype="Time">
+            <StartValue>T#2M</StartValue>
+          </Member>
+          <Member Name="tTimeoutPxGrease" Datatype="Time">
+            <StartValue>T#2M</StartValue>
+          </Member>
+        </Section>
+      </Sections>
+    </Member>
+    <Member Name="ConfigVacuumValve" Datatype="&quot;stConfigActuator&quot;" Remanence="Retain">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalAccessible" SystemDefined="true">false</BooleanAttribute>
+        <BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Sections>
+        <Section Name="None">
+          <Member Name="xEnaMeasureTimeHome" Datatype="Bool">
+            <StartValue>FALSE</StartValue>
+          </Member>
+          <Member Name="xEnaMeasureTimeAction" Datatype="Bool">
+            <StartValue>FALSE</StartValue>
+          </Member>
+          <Member Name="xKeepHomeSolActive" Datatype="Bool">
+            <StartValue>FALSE</StartValue>
+          </Member>
+          <Member Name="xKeepActionSolActive" Datatype="Bool">
+            <StartValue>TRUE</StartValue>
+          </Member>
+          <Member Name="xPresHomePxSensor" Datatype="Bool">
+            <StartValue>TRUE</StartValue>
+          </Member>
+          <Member Name="xPresActionPxSensor" Datatype="Bool">
+            <StartValue>TRUE</StartValue>
+          </Member>
+          <Member Name="tSwitchingCommand" Datatype="Time">
+            <StartValue>T#50MS</StartValue>
+          </Member>
+          <Member Name="tTimeOutHomeSensor" Datatype="Time">
+            <StartValue>T#8S</StartValue>
+          </Member>
+          <Member Name="tTimeOutActionSensor" Datatype="Time">
+            <StartValue>T#8S</StartValue>
+          </Member>
+          <Member Name="tHomeTime" Datatype="Time">
+            <StartValue>T#3S</StartValue>
+          </Member>
+          <Member Name="tActionTime" Datatype="Time">
+            <StartValue>T#3S</StartValue>
+          </Member>
+          <Member Name="tFilterPxHome" Datatype="Time">
+            <StartValue>T#100MS</StartValue>
+          </Member>
+          <Member Name="tFilterPxAction" Datatype="Time">
+            <StartValue>T#100MS</StartValue>
+          </Member>
+        </Section>
+      </Sections>
+    </Member>
+    <Member Name="tTimeoutGimball" Datatype="Time" Remanence="Retain">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalAccessible" SystemDefined="true">false</BooleanAttribute>
+        <BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <StartValue>T#5S</StartValue>
+    </Member>
+    <Member Name="tTimeoutEccentric" Datatype="Time" Remanence="Retain">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalAccessible" SystemDefined="true">false</BooleanAttribute>
+        <BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <StartValue>T#20S</StartValue>
+    </Member>
+    <Member Name="rFlatnessStrockPos" Datatype="Real" Remanence="Retain">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalAccessible" SystemDefined="true">false</BooleanAttribute>
+        <BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">FerRobotic strock position for control flatness</MultiLanguageText>
+      </Comment>
+      <StartValue>23.9</StartValue>
+    </Member>
+    <Member Name="rDeltaFlatnessStrock" Datatype="Real" Remanence="Retain">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalAccessible" SystemDefined="true">false</BooleanAttribute>
+        <BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Comment>
+        <MultiLanguageText Lang="en-US">Delta maxi for flatness control</MultiLanguageText>
+      </Comment>
+      <StartValue>0.8</StartValue>
+    </Member>
+    <Member Name="nNbDiskLeft" Datatype="USInt" Remanence="Retain">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalAccessible" SystemDefined="true">false</BooleanAttribute>
+        <BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <StartValue>2</StartValue>
+    </Member>
+    <Member Name="nNbDiskRight" Datatype="USInt" Remanence="Retain">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalAccessible" SystemDefined="true">false</BooleanAttribute>
+        <BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <StartValue>1</StartValue>
+    </Member>
+    <Member Name="rLowLimiteStroke" Datatype="Real" Remanence="Retain">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalAccessible" SystemDefined="true">false</BooleanAttribute>
+        <BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <StartValue>5.0</StartValue>
+    </Member>
+    <Member Name="StrokeTooExtend" Datatype="&quot;stHysteresis&quot;" Remanence="Retain">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalAccessible" SystemDefined="true">false</BooleanAttribute>
+        <BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Sections>
+        <Section Name="None">
+          <Member Name="rValueOn" Datatype="Real">
+            <StartValue>40.0</StartValue>
+          </Member>
+          <Member Name="rValueOff" Datatype="Real">
+            <StartValue>35.0</StartValue>
+          </Member>
+        </Section>
+      </Sections>
+    </Member>
+    <Member Name="StrokeTooRetract" Datatype="&quot;stHysteresis&quot;" Remanence="Retain">
+      <AttributeList>
+        <BooleanAttribute Name="ExternalAccessible" SystemDefined="true">false</BooleanAttribute>
+        <BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute>
+        <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
+      </AttributeList>
+      <Sections>
+        <Section Name="None">
+          <Member Name="rValueOn" Datatype="Real">
+            <StartValue>8.0</StartValue>
+          </Member>
+          <Member Name="rValueOff" Datatype="Real">
+            <StartValue>13.0</StartValue>
+          </Member>
+        </Section>
+      </Sections>
+    </Member>
+  </Section>
+</Sections></Interface>
+      <MemoryLayout>Optimized</MemoryLayout>
+      <MemoryReserve>100</MemoryReserve>
+      <Name>DB_Parameters</Name>
+      <Namespace />
+      <Number>2</Number>
+      <ProgrammingLanguage>DB</ProgrammingLanguage>
+    </AttributeList>
+    <ObjectList>
+      <MultilingualText ID="1" CompositionName="Comment">
+        <ObjectList>
+          <MultilingualTextItem ID="2" CompositionName="Items">
+            <AttributeList>
+              <Culture>fr-FR</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+          <MultilingualTextItem ID="3" CompositionName="Items">
+            <AttributeList>
+              <Culture>en-US</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+          <MultilingualTextItem ID="4" CompositionName="Items">
+            <AttributeList>
+              <Culture>es-ES</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+        </ObjectList>
+      </MultilingualText>
+      <MultilingualText ID="5" CompositionName="Title">
+        <ObjectList>
+          <MultilingualTextItem ID="6" CompositionName="Items">
+            <AttributeList>
+              <Culture>fr-FR</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+          <MultilingualTextItem ID="7" CompositionName="Items">
+            <AttributeList>
+              <Culture>en-US</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+          <MultilingualTextItem ID="8" CompositionName="Items">
+            <AttributeList>
+              <Culture>es-ES</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+        </ObjectList>
+      </MultilingualText>
+    </ObjectList>
+  </SW.Blocks.GlobalDB>
+</Document>
